@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.46.0",
+    "@payloadcms/live-preview-react": "^3.46.0",
     "@payloadcms/next": "^3.46.0",
     "@payloadcms/richtext-lexical": "^3.46.0",
     "@payloadcms/translations": "^3.47.0",

@@ -4,10 +4,11 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
+import { Media } from './collections/Media'
+import { Users } from './collections/Users'
+import { Posts } from './collections/Posts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -15,6 +16,10 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     dateFormat: 'dd/MM/yyyy',
+    meta: {
+      title: 'mon dashboard',
+      description: 'Mon application Payload',
+    },
   },
   i18n: {
     // Internationalization configuration
@@ -26,7 +31,7 @@ export default buildConfig({
   editor: lexicalEditor(),
 
   // Define and configure your collections in this array
-  collections: [Users, Media],
+  collections: [Users, Media, Posts],
 
   // Your Payload secret - should be a complex and secure string, unguessable
   secret: process.env.PAYLOAD_SECRET || '',
