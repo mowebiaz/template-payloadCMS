@@ -3,8 +3,9 @@ import configPromise from '@payload-config'
 import { cache } from 'react'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { draftMode } from 'next/headers'
+import { RichText } from '@/components/RichText/RichText'
 
-export async function generateStaticParams() {
+/* export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
     collection: 'posts',
@@ -12,13 +13,13 @@ export async function generateStaticParams() {
     //overrideAccess: false,
     limit: 10,
     select: { slug: true },
-  })
+  }) 
 
   const params = posts.docs.map(({ slug }) => {
     return { slug }
   })
   return params
-}
+} */
 
 type Args = { params: Promise<{ slug?: string }> }
 
@@ -37,8 +38,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <h1>{post.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      <p>Slug: {post.slug}</p>
+      {post.content && <RichText data={post.content} />}
       <p>Status: {post._status}</p>
       <p>Created at: {new Date(post.createdAt).toLocaleString()}</p>
       <p>Updated at: {new Date(post.updatedAt).toLocaleString()}</p>
