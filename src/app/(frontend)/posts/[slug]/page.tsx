@@ -4,6 +4,7 @@ import { cache } from 'react'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { draftMode } from 'next/headers'
 import { RichText } from '@/components/RichText/RichText'
+import { format } from 'date-fns'
 
 /* export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -40,8 +41,8 @@ export default async function Post({ params: paramsPromise }: Args) {
       <h1>{post.title}</h1>
       {post.content && <RichText data={post.content} />}
       <p>Status: {post._status}</p>
-      <p>Created at: {new Date(post.createdAt).toLocaleString()}</p>
-      <p>Updated at: {new Date(post.updatedAt).toLocaleString()}</p>
+      <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
+      <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
       <p>Draft: {draft ? 'Yes' : 'No'}</p>
       <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
     </div>
