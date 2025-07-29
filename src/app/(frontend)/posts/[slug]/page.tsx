@@ -5,8 +5,9 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { draftMode } from 'next/headers'
 import { RichText } from '@/components/RichText/RichText'
 import { format } from 'date-fns'
+import Image from 'next/image'
 
-/* export async function generateStaticParams() {
+export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
     collection: 'posts',
@@ -14,16 +15,24 @@ import { format } from 'date-fns'
     //overrideAccess: false,
     limit: 10,
     select: { slug: true },
-  }) 
-
-  const params = posts.docs.map(({ slug }) => {
-    return { slug }
   })
+
+  /*    const params = posts.docs.map(({ slug }) => {
+    //console.log(typeof slug, slug)
+    return { slug } 
+
+  }) */
+
+  const params = posts.docs
+    .filter((doc) => typeof doc.slug === 'string')
+    .map(({ slug }) => {
+      return { slug }
+    })
+
   return params
-} */
+}
 
 type Args = { params: Promise<{ slug?: string }> }
-
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
@@ -34,11 +43,26 @@ export default async function Post({ params: paramsPromise }: Args) {
     return <div>Post not found</div>
   }
 
+  if (!slug) {
+    return <div>Slug is required</div>
+  }
+
   return (
     <div>
       {draft && <LivePreviewListener />}
 
       <h1>{post.title}</h1>
+      <p>Slug: {post.slug}</p>
+      {post.coverImage ? (
+        <Image
+          src={post.coverImage.url}
+          alt={post.coverImage.alt || 'Cover Image'}
+          width={600}
+          height={400}
+        />
+      ) : (
+        <p>No cover image available</p>
+      )}
       {post.content && <RichText data={post.content} />}
       <p>Status: {post._status}</p>
       <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>

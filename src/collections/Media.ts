@@ -5,7 +5,7 @@ export const Media: CollectionConfig = {
   admin: {
     useAsTitle: 'nom',
     description: 'Media collection for storing images and their metadata',
-    defaultColumns: ['nom', 'filename', 'alt', "taille de l'image"],
+    defaultColumns: ['nom', 'filename', 'alt'],
   },
   fields: [
     {
@@ -20,10 +20,6 @@ export const Media: CollectionConfig = {
         description:
           'Alternative text for the image, used for accessibility and SEO',
       },
-    },
-    {
-      name: "taille de l'image",
-      type: 'number',
     },
   ],
   upload: true,

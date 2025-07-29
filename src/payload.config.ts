@@ -15,14 +15,26 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    //avatar: 'default',
+    //avatar: 'gravatar',
+    avatar: {
+      Component: {
+        path: '@/components/Avatar.tsx',
+      },
+    },
     dateFormat: 'dd/MM/yyyy',
     meta: {
       title: 'mon dashboard',
       description: 'Mon application Payload',
     },
+    /*importMap: {
+      baseDir: path.resolve(dirname),
+    },
+    user: Users.slug,*/
   },
+
+  // Internationalization configuration
   i18n: {
-    // Internationalization configuration
     fallbackLanguage: 'en',
     supportedLanguages: { fr, en },
   },
@@ -51,4 +63,13 @@ export default buildConfig({
   // This is optional - if you don't need to do these things,
   // you don't need it!
   sharp,
+
+  // To make documents created before enabling draft mode visible in the admin field
+  /*   onInit: async (payload) => {
+    await payload.update({
+      collection: 'posts',
+      where: {},
+      data: {_status: 'published'}
+    })
+  }, */
 })

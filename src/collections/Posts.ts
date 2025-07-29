@@ -8,6 +8,7 @@ import type { CollectionConfig } from 'payload'
 export const Posts: CollectionConfig = {
   slug: 'posts',
   // ajouter les autorisations
+ // par exemple pour les drafts
 
   admin: {
     livePreview: {
@@ -26,6 +27,7 @@ export const Posts: CollectionConfig = {
     drafts: {
       autosave: { interval: 100 },
       //schedulePublish: true,
+      //validate: true,
     },
     maxPerDoc: 50,
   },
@@ -35,6 +37,15 @@ export const Posts: CollectionConfig = {
     slug: true,
   }, */
   fields: [
+    {
+      name: 'coverImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description: 'Image de couverture du post',
+      },
+    },
     {
       name: 'title',
       type: 'text',

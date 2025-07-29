@@ -121,6 +121,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  avatar?: (number | null) | Media;
   lastName?: string | null;
   firstName?: string | null;
   updatedAt: string;
@@ -154,7 +155,6 @@ export interface Media {
    * Alternative text for the image, used for accessibility and SEO
    */
   alt: string;
-  "taille de l'image"?: number | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -173,6 +173,10 @@ export interface Media {
  */
 export interface Post {
   id: number;
+  /**
+   * Image de couverture du post
+   */
+  coverImage?: (number | null) | Media;
   title: string;
   slug: string;
   content?: {
@@ -260,6 +264,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  avatar?: T;
   lastName?: T;
   firstName?: T;
   updatedAt?: T;
@@ -286,7 +291,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   nom?: T;
   alt?: T;
-  "taille de l'image"?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -304,6 +308,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  coverImage?: T;
   title?: T;
   slug?: T;
   content?: T;

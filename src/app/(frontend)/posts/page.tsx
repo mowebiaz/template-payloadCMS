@@ -1,11 +1,15 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { format } from 'date-fns'
+import { draftMode } from 'next/headers'
 
 export default async function Posts() {
+  const { isEnabled: draft } = await draftMode()
+
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
     collection: 'posts',
+    draft,
     select: {
       title: true,
       slug: true,
@@ -21,10 +25,11 @@ export default async function Posts() {
       <ul>
         {posts.docs.map((post) => (
           <li key={post.id}>
-            <a href={`/posts/${post.slug}`}>{post.title}</a>
+            <h2>{post.title}</h2>
+            <a href={`/posts/${post.slug}`}>lien vers le post</a>
+            <p>Slug: {post.slug}</p>
             <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
-
-            <p>{post.id}</p>
+            <p>ID du post: {post.id}</p>
           </li>
         ))}
       </ul>
