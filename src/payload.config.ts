@@ -24,8 +24,25 @@ export default buildConfig({
     },
     dateFormat: 'dd/MM/yyyy',
     meta: {
-      title: 'mon dashboard',
-      description: 'Mon application Payload',
+      titleSuffix: ' - Mon application Payload',
+      title: 'blanck payload',
+      description: 'this is exemple for educational purpose only',
+      icons: [
+        {url: '/logo3_sombre.svg',
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+        },
+                {url: '/logo3_vert.svg',
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+          media: '(prefers-color-scheme: dark)',
+        },
+
+      ]
     },
     /*importMap: {
       baseDir: path.resolve(dirname),
