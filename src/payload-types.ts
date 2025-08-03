@@ -122,6 +122,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   avatar?: (number | null) | Media;
+  roles?: ('admin' | 'editor' | 'user')[] | null;
   lastName?: string | null;
   firstName?: string | null;
   updatedAt: string;
@@ -265,6 +266,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   avatar?: T;
+  roles?: T;
   lastName?: T;
   firstName?: T;
   updatedAt?: T;

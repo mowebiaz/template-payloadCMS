@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url'
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
 import { Media } from './collections/Media'
-import { Users } from './collections/Users'
+import { Users } from './collections/Users/config'
 import { Posts } from './collections/Posts'
 
 const filename = fileURLToPath(import.meta.url)
