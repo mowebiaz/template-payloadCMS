@@ -4,13 +4,35 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
+import editor from './Users/access/editor'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
-  // ajouter les autorisations
- // par exemple pour les drafts
+  access: {
+    readVersions: editor,
+    read: ({ req }) => {
+      if (req.user && req.user?.collection === 'users') return true
+      return {
+        or: [
+          {
+            _status: { equals: 'published' },
+          },
+          {
+            _status: { exists: false },
+          },
+        ],
+      }
+    },
+  },
 
   admin: {
+    meta: {
+      titleSuffix: ' - blog',
+      title: 'mon blog',
+    },
+    defaultColumns: ['title', 'createdAt', 'updatedAt'],
+    useAsTitle: 'title',
+    //hideAPIURL: true,
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
@@ -50,6 +72,13 @@ export const Posts: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      /*       admin: {
+        className: 'title-field',
+        style: {
+          backgroundColor: 'red',
+
+        }
+      }, */
     },
     {
       name: 'slug',

@@ -1,15 +1,17 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { format } from 'date-fns'
-import { draftMode } from 'next/headers'
+import { headers as getHeaders } from 'next/headers'
 
 export default async function Posts() {
-  const { isEnabled: draft } = await draftMode()
-
+  const headers = await getHeaders()
   const payload = await getPayload({ config: configPromise })
+  const { user } = await payload.auth({ headers })
+
   const posts = await payload.find({
     collection: 'posts',
-    draft,
+    overrideAccess: Boolean(user),
+    draft: Boolean(user),
     select: {
       title: true,
       slug: true,
@@ -30,6 +32,7 @@ export default async function Posts() {
             <p>Slug: {post.slug}</p>
             <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
             <p>ID du post: {post.id}</p>
+            <p>---------------------</p>
           </li>
         ))}
       </ul>

@@ -6,6 +6,8 @@ import { draftMode } from 'next/headers'
 import { RichText } from '@/components/RichText/RichText'
 import { format } from 'date-fns'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import { headers as getHeaders } from 'next/headers'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -74,13 +76,17 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+  const headers = await getHeaders()
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
+  const { user } = await payload.auth({ headers })
 
   const result = await payload.find({
     collection: 'posts',
-    draft,
+    overrideAccess: Boolean(user),
+    draft: Boolean(user),
+    //draft,
     //overrideAccess: draft,
     limit: 1,
     where: {
