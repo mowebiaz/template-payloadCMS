@@ -95,19 +95,12 @@ export const Posts: CollectionConfig = {
         /*         admin: {
           //hideInsertParagraphAtEnd: true,
           placeholder: 'Write your post content here...',
-        },
+        },*/
         features: ({ defaultFeatures }) => [
           FixedToolbarFeature(),
-          ...defaultFeatures,
-        ], */
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            //BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-            FixedToolbarFeature(),
-            // TreeViewFeature(), pour le code
-          ]
-        },
+          ...defaultFeatures.filter((feature) => !['inlineCode'].includes(feature.key))  
+          //...defaultFeatures,
+        ],
       }),
     },
   ],

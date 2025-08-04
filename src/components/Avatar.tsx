@@ -7,7 +7,7 @@ export const Avatar = ({ user }: { user: User }) => {
   if (avatar) {
     return (
       <Image
-      style={{borderRadius: '50%'}}
+        style={{ borderRadius: '50%' }}
         //changer le src en fonction de l'amplacement des images: vrcel blob ?
         //src={`${process.env.S3}/${avatar.filename}`}
         src={avatar.url}

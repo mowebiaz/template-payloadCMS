@@ -11,6 +11,9 @@ export const Media: CollectionConfig = {
     {
       name: 'nom',
       type: 'text',
+/*       admin: {
+        position: 'sidebar',
+      }, */
     },
     {
       name: 'alt',
@@ -19,6 +22,7 @@ export const Media: CollectionConfig = {
       admin: {
         description:
           'Alternative text for the image, used for accessibility and SEO',
+        //position: 'sidebar',
       },
     },
   ],
