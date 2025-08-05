@@ -6,7 +6,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import editor from './Users/access/editor'
-import { ContentWithMedia } from '@/blocks/ContentWithMedia'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { TableOfContent } from '@/blocks/TableOfContent/config'
 
 export const Posts: CollectionConfig = {
@@ -116,7 +116,7 @@ export const Posts: CollectionConfig = {
         initCollapsed: true,
         isSortable: false,
       },
-      blocks: [ContentWithMedia],
+      blocks: [ContentWithMedia, TableOfContent],
       name: 'BlockTest',
       label: false,
       /*       labels: {

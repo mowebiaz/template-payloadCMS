@@ -195,33 +195,52 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
-  BlockTest?:
-    | {
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        imageBlock?: (number | null) | Media;
-        textPosition?: ('Left' | 'Right') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'contentWithMedia';
-      }[]
-    | null;
+  BlockTest?: (ContentWithMedia | ToCProps)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia".
+ */
+export interface ContentWithMedia {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  imageBlock?: (number | null) | Media;
+  textPosition?: ('Left' | 'Right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithMedia';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToCProps".
+ */
+export interface ToCProps {
+  Content?:
+    | {
+        header?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableOfContents';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -341,19 +360,38 @@ export interface PostsSelect<T extends boolean = true> {
   BlockTest?:
     | T
     | {
-        contentWithMedia?:
-          | T
-          | {
-              content?: T;
-              imageBlock?: T;
-              textPosition?: T;
-              id?: T;
-              blockName?: T;
-            };
+        contentWithMedia?: T | ContentWithMediaSelect<T>;
+        tableOfContents?: T | ToCPropsSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia_select".
+ */
+export interface ContentWithMediaSelect<T extends boolean = true> {
+  content?: T;
+  imageBlock?: T;
+  textPosition?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToCProps_select".
+ */
+export interface ToCPropsSelect<T extends boolean = true> {
+  Content?:
+    | T
+    | {
+        header?: T;
+        link?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

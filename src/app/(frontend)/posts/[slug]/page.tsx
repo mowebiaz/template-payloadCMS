@@ -8,6 +8,7 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { headers as getHeaders } from 'next/headers'
+import { RenderBlocks } from '@/blocks'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -66,6 +67,8 @@ export default async function Post({ params: paramsPromise }: Args) {
         <p>No cover image available</p>
       )}
       {post.content && <RichText data={post.content} />}
+      <RenderBlocks blocks={post.BlockTest} />
+
       <p>Status: {post._status}</p>
       <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
       <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>

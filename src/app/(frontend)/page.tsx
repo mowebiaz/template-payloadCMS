@@ -7,6 +7,7 @@ export default async function Home() {
   const headers = await getHeaders()
   const payload = await getPayload({config})
   const {user} = await payload.auth({headers})
+
   return (
     <>
     {user ? 'Bienvenue ' + user.email + ' ' + user.roles?.map(role => role) : 'Bienvenue visiteur'}

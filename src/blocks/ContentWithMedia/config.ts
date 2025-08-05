@@ -1,7 +1,11 @@
+import {
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import { Block } from 'payload'
 
 export const ContentWithMedia: Block = {
   slug: 'contentWithMedia',
+  interfaceName: 'ContentWithMedia',
   labels: {
     singular: 'Content with Media Block',
     plural: 'Content with Media Blocks',
@@ -12,6 +16,11 @@ export const ContentWithMedia: Block = {
     {
       type: 'richText',
       name: 'content',
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+        ],
+      }),
     },
     {
       type: 'upload',
