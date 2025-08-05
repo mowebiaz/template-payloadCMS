@@ -174,12 +174,12 @@ export interface Media {
  */
 export interface Post {
   id: number;
+  title: string;
+  slug: string;
   /**
    * Image de couverture du post
    */
   coverImage?: (number | null) | Media;
-  title: string;
-  slug: string;
   content?: {
     root: {
       type: string;
@@ -195,6 +195,30 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  BlockTest?:
+    | {
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        image?: (number | null) | Media;
+        textPosition?: ('Left' | 'Right') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'contentWithMedia';
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -310,10 +334,23 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  coverImage?: T;
   title?: T;
   slug?: T;
+  coverImage?: T;
   content?: T;
+  BlockTest?:
+    | T
+    | {
+        contentWithMedia?:
+          | T
+          | {
+              content?: T;
+              image?: T;
+              textPosition?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

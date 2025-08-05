@@ -5,6 +5,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import editor from './Users/access/editor'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -16,9 +17,6 @@ export const Posts: CollectionConfig = {
         or: [
           {
             _status: { equals: 'published' },
-          },
-          {
-            _status: { exists: false },
           },
         ],
       }
@@ -60,15 +58,6 @@ export const Posts: CollectionConfig = {
   }, */
   fields: [
     {
-      name: 'coverImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-      admin: {
-        description: 'Image de couverture du post',
-      },
-    },
-    {
       name: 'title',
       type: 'text',
       required: true,
@@ -86,22 +75,51 @@ export const Posts: CollectionConfig = {
       required: true,
       unique: true,
     },
+
+    {
+      name: 'coverImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description: 'Image de couverture du post',
+      },
+    },
+
     {
       name: 'content',
       type: 'richText',
 
       // Pass the Lexical editor here and override base settings as necessary
       editor: lexicalEditor({
-        /*         admin: {
+        admin: {
           //hideInsertParagraphAtEnd: true,
-          placeholder: 'Write your post content here...',
-        },*/
+          placeholder: 'Ecrivez votre article ici...',
+        },
         features: ({ defaultFeatures }) => [
           FixedToolbarFeature(),
-          ...defaultFeatures.filter((feature) => !['inlineCode'].includes(feature.key))  
           //...defaultFeatures,
+          ...defaultFeatures.filter(
+            (feature) => !['inlineCode'].includes(feature.key),
+          ),
         ],
       }),
+    },
+    {
+      type: 'blocks',
+      admin: {
+        initCollapsed: true,
+        isSortable: false,
+      },
+      blocks: [ContentWithMedia],
+      name: 'BlockTest',
+      label: false,
+      /*       labels: {
+        singular: 'Content with Media Block',
+        plural: 'Content with Media Blocks',
+      }, */
+      minRows: 1,
+      maxRows: 20,
     },
   ],
 }
