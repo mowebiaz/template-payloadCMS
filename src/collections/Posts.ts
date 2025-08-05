@@ -1,5 +1,6 @@
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
@@ -102,6 +103,9 @@ export const Posts: CollectionConfig = {
           ...defaultFeatures.filter(
             (feature) => !['inlineCode'].includes(feature.key),
           ),
+          BlocksFeature({
+            blocks: [ContentWithMedia],
+          })
         ],
       }),
     },

@@ -15,7 +15,7 @@ export const ContentWithMedia: Block = {
     },
     {
       type: 'upload',
-      name: 'image',
+      name: 'imageBlock',
       relationTo: 'media',
     },
     {

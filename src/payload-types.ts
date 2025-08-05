@@ -212,7 +212,7 @@ export interface Post {
           };
           [k: string]: unknown;
         } | null;
-        image?: (number | null) | Media;
+        imageBlock?: (number | null) | Media;
         textPosition?: ('Left' | 'Right') | null;
         id?: string | null;
         blockName?: string | null;
@@ -345,7 +345,7 @@ export interface PostsSelect<T extends boolean = true> {
           | T
           | {
               content?: T;
-              image?: T;
+              imageBlock?: T;
               textPosition?: T;
               id?: T;
               blockName?: T;
