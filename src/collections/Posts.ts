@@ -7,6 +7,7 @@ import {
 import type { CollectionConfig } from 'payload'
 import editor from './Users/access/editor'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia'
+import { TableOfContent } from '@/blocks/TableOfContent/config'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -104,7 +105,7 @@ export const Posts: CollectionConfig = {
             (feature) => !['inlineCode'].includes(feature.key),
           ),
           BlocksFeature({
-            blocks: [ContentWithMedia],
+            blocks: [ContentWithMedia, TableOfContent],
           })
         ],
       }),
