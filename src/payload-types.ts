@@ -180,6 +180,14 @@ export interface Post {
    * Image de couverture du post
    */
   coverImage?: (number | null) | Media;
+  /**
+   * Résumé de l'article
+   */
+  excerpt?: string | null;
+  /**
+   * Texte brut de l'article, utilisé pour le SEO
+   */
+  plaintext: string;
   content?: {
     root: {
       type: string;
@@ -196,6 +204,15 @@ export interface Post {
     [k: string]: unknown;
   } | null;
   BlockTest?: (ContentWithMedia | ToCProps)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    canonicalUrl?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -356,12 +373,22 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   coverImage?: T;
+  excerpt?: T;
+  plaintext?: T;
   content?: T;
   BlockTest?:
     | T
     | {
         contentWithMedia?: T | ContentWithMediaSelect<T>;
         tableOfContents?: T | ToCPropsSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        canonicalUrl?: T;
       };
   updatedAt?: T;
   createdAt?: T;

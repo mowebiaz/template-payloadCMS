@@ -8,6 +8,13 @@ import type { CollectionConfig } from 'payload'
 import editor from './Users/access/editor'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { TableOfContent } from '@/blocks/TableOfContent/config'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -60,71 +67,132 @@ export const Posts: CollectionConfig = {
   }, */
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-      /*       admin: {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'content',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              required: true,
+              /*       admin: {
         className: 'title-field',
         style: {
           backgroundColor: 'red',
 
         }
       }, */
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
+            },
+            {
+              name: 'slug',
+              type: 'text',
+              required: true,
+              unique: true,
+            },
 
-    {
-      name: 'coverImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-      admin: {
-        description: 'Image de couverture du post',
-      },
-    },
+            {
+              name: 'coverImage',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              admin: {
+                description: 'Image de couverture du post',
+              },
+            },
+            {
+              name: 'excerpt',
+              type: 'textarea',
+              admin: {
+                description: "Résumé de l'article",
+              },
+            },
+            {
+              name: 'plaintext',
+              type: 'text',
+              required: true,
+              admin: {
+                description: "Texte brut de l'article, utilisé pour le SEO",
+              },
+            },
 
-    {
-      name: 'content',
-      type: 'richText',
+            {
+              name: 'content',
+              type: 'richText',
 
-      // Pass the Lexical editor here and override base settings as necessary
-      editor: lexicalEditor({
-        admin: {
-          //hideInsertParagraphAtEnd: true,
-          placeholder: 'Ecrivez votre article ici...',
-        },
-        features: ({ defaultFeatures }) => [
-          FixedToolbarFeature(),
-          //...defaultFeatures,
-          ...defaultFeatures.filter(
-            (feature) => !['inlineCode'].includes(feature.key),
-          ),
-          BlocksFeature({
-            blocks: [ContentWithMedia, TableOfContent],
-          })
-        ],
-      }),
-    },
-    {
-      type: 'blocks',
-      admin: {
-        initCollapsed: true,
-        isSortable: false,
-      },
-      blocks: [ContentWithMedia, TableOfContent],
-      name: 'BlockTest',
-      label: false,
-      /*       labels: {
+              // Pass the Lexical editor here and override base settings as necessary
+              editor: lexicalEditor({
+                admin: {
+                  //hideInsertParagraphAtEnd: true,
+                  placeholder: 'Ecrivez votre article ici...',
+                },
+                features: ({ defaultFeatures }) => [
+                  FixedToolbarFeature(),
+                  //...defaultFeatures,
+                  ...defaultFeatures.filter(
+                    (feature) => !['inlineCode'].includes(feature.key),
+                  ),
+                  BlocksFeature({
+                    blocks: [ContentWithMedia, TableOfContent],
+                  }),
+                ],
+              }),
+            },
+            {
+              type: 'blocks',
+              admin: {
+                initCollapsed: true,
+                isSortable: false,
+              },
+              blocks: [ContentWithMedia, TableOfContent],
+              name: 'BlockTest',
+              label: false,
+              /*       labels: {
         singular: 'Content with Media Block',
         plural: 'Content with Media Blocks',
       }, */
-      minRows: 1,
-      maxRows: 20,
+              minRows: 1,
+              maxRows: 20,
+            },
+          ],
+        },
+        {
+          label: 'SEO',
+          name: 'meta',
+          fields: [
+            MetaTitleField({
+              hasGenerateFn: true,
+              /*               overrides: {
+                label: 'Whatever you want',
+              }, */
+            }),
+            MetaDescriptionField({
+              hasGenerateFn: true,
+            }),
+            MetaImageField({
+              relationTo: 'media',
+            }),
+            {
+              name: 'canonicalUrl',
+              label: 'Canonical URL',
+              type: 'text',
+              hooks: {
+                beforeChange: [
+                  async({data, value}) => !value ? `https://example.com/posts/${data?.slug}` : value
+                ]
+              }
+            },
+            PreviewField({
+              hasGenerateFn: true,
+            }),
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+              imagePath: 'meta.image',
+            }),
+          ],
+        },
+      ],
     },
   ],
 }

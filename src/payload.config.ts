@@ -2,6 +2,7 @@ import sharp from 'sharp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { en } from '@payloadcms/translations/languages/en'
@@ -81,6 +82,19 @@ export default buildConfig({
   // This is optional - if you don't need to do these things,
   // you don't need it!
   sharp,
+  plugins: [seoPlugin({
+/*     collections: ['posts'],
+    uploadsCollection: 'media', */
+    generateTitle: ({doc}) => doc.title,
+    //generateDescription: ({doc}) => doc.excerpt,
+    generateDescription: ({doc}) => doc.plaintext,
+    generateURL: ({doc, collectionSlug}) => `http://localhost:3000/${collectionSlug}/${doc?.slug}`,
+/*     tabbedUI: true,
+    fields: ({defaultFields}) => [
+      ...defaultFields,
+      {name: 'canonicalURL', type: 'text'},
+    ] */
+  })]
 
   // To make documents created before enabling draft mode visible in the admin field
   /*   onInit: async (payload) => {
