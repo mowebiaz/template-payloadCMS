@@ -31,8 +31,14 @@ export const Posts: CollectionConfig = {
       }
     },
   },
+  labels: {
+    singular: 'Article',
+    plural: 'Articles',
+  },
 
   admin: {
+    //group: 'posts',
+    description: 'Collection for blog posts',
     meta: {
       titleSuffix: ' - blog',
       title: 'mon blog',

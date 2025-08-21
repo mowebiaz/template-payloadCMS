@@ -4,7 +4,7 @@ import { anyone } from './Users/access/anyone'
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: anyone
+    read: anyone,
   },
   admin: {
     useAsTitle: 'nom',
@@ -15,7 +15,7 @@ export const Media: CollectionConfig = {
     {
       name: 'nom',
       type: 'text',
-/*       admin: {
+      /*       admin: {
         position: 'sidebar',
       }, */
     },
@@ -30,5 +30,16 @@ export const Media: CollectionConfig = {
       },
     },
   ],
-  upload: true,
+  upload: {
+    formatOptions: {
+      format: 'webp',
+    },
+    mimeTypes: ['image/*'],
+    //staticDir: 'media',
+    
+    // from payload v3.51.0
+    //imageSizes: [{ name: 'small', fit: 'cover', width: 400, height: 400 }],
+    //adminThumbnail: 'small',
+    //adminThumbnail: ({doc}) : string => `https://google.com/path/to/file/${doc.filename}`,
+  },
 }

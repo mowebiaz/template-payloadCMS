@@ -169,6 +169,8 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Collection for blog posts
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
