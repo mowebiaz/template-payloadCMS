@@ -1,7 +1,11 @@
 import type { CollectionConfig } from 'payload'
+import { anyone } from './Users/access/anyone'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  access: {
+    read: anyone
+  },
   admin: {
     useAsTitle: 'nom',
     description: 'Media collection for storing images and their metadata',

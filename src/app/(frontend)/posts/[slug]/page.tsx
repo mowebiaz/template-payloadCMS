@@ -56,9 +56,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <h1>{post.title}</h1>
       <p>Slug: {post.slug}</p>
-      {post.coverImage ? (
+      {post.coverImage && typeof post.coverImage !== 'number' ? (
         <Image
-          src={post.coverImage.url}
+          src={post.coverImage.url ?? ''}
           alt={post.coverImage.alt || 'Cover Image'}
           width={600}
           height={400}
