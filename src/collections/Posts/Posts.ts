@@ -5,7 +5,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
-import editor from './Users/access/editor'
+import editor from '../Users/access/editor'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { TableOfContent } from '@/blocks/TableOfContent/config'
 import {
@@ -15,6 +15,8 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { afterChangeFieldHook } from './fieldHooks'
+import { afterErrorHook } from './hooks'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -120,6 +122,13 @@ export const Posts: CollectionConfig = {
               admin: {
                 description: "Texte brut de l'article, utilisé pour le SEO",
               },
+              hooks: {
+                beforeValidate: [],
+                beforeChange: [],
+                afterChange: [afterChangeFieldHook],
+                afterRead: [],
+                beforeDuplicate: [],
+              }
             },
 
             {
@@ -201,4 +210,8 @@ export const Posts: CollectionConfig = {
       ],
     },
   ],
+
+  hooks: {
+    afterError: [afterErrorHook]
+  },
 }
