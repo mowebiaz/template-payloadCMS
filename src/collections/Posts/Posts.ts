@@ -199,6 +199,8 @@ export const Posts: CollectionConfig = {
             },
             PreviewField({
               hasGenerateFn: true,
+                            titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
             }),
             OverviewField({
               titlePath: 'meta.title',

@@ -9,6 +9,8 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { headers as getHeaders } from 'next/headers'
 import { RenderBlocks } from '@/blocks'
+import { generateMeta } from '@/utilities/generateMeta'
+import { Metadata } from 'next'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -16,7 +18,7 @@ export async function generateStaticParams() {
     collection: 'posts',
     //draft: false,
     //overrideAccess: false,
-    limit: 10,
+    limit: 1000,
     select: { slug: true },
   })
 
@@ -37,8 +39,8 @@ export async function generateStaticParams() {
 
 type Args = { params: Promise<{ slug?: string }> }
 export default async function Post({ params: paramsPromise }: Args) {
-  const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
+  const { isEnabled: draft } = await draftMode()
   //const url = '/posts/' + slug
   const post = await queryPostBySlug({ slug })
 
@@ -56,9 +58,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <h1>{post.title}</h1>
       <p>Slug: {post.slug}</p>
-      {post.coverImage && typeof post.coverImage !== 'number' ? (
+      {post.coverImage && typeof post.coverImage === 'object' && post.coverImage.url ? (
         <Image
-          src={post.coverImage.url ?? ''}
+          src={post.coverImage.url}
           alt={post.coverImage.alt || 'Cover Image'}
           width={600}
           height={400}
@@ -76,6 +78,16 @@ export default async function Post({ params: paramsPromise }: Args) {
       <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
     </div>
   )
+}
+
+// the name "generateMetadata" is required
+export async function generateMetadata({
+  params: paramsPromise,
+}: Args): Promise<Metadata> {
+  const { slug = '' } = await paramsPromise
+  const post = await queryPostBySlug({ slug })
+
+  return generateMeta({ doc: post })
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
@@ -101,3 +113,5 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 
   return result.docs?.[0] || null
 })
+
+
