@@ -11,6 +11,9 @@ import { headers as getHeaders } from 'next/headers'
 import { RenderBlocks } from '@/blocks'
 import { generateMeta } from '@/utilities/generateMeta'
 import { Metadata } from 'next'
+import { articleSchema, imageSchema } from '@/components/Schema/Schema'
+import type { Media, Post } from '@/payload-types'
+import Script from 'next/script'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -43,6 +46,8 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   //const url = '/posts/' + slug
   const post = await queryPostBySlug({ slug })
+  const schema = [articleSchema(post), post.meta?.image && imageSchema(post.meta.image as Media)].filter(Boolean)
+  //const schema = [imageSchema(post.meta?.image as Media), articleSchema(post)]
 
   if (!post) {
     return <div>Post not found</div>
@@ -53,30 +58,41 @@ export default async function Post({ params: paramsPromise }: Args) {
   }
 
   return (
-    <div>
-      {draft && <LivePreviewListener />}
+    <>
+      <Script
+        id="schema-script"
+        type={'application/ld+json'}
+        strategy={'lazyOnload'}
+      >
+        {JSON.stringify(schema)}
+      </Script>
+      <div>
+        {draft && <LivePreviewListener />}
 
-      <h1>{post.title}</h1>
-      <p>Slug: {post.slug}</p>
-      {post.coverImage && typeof post.coverImage === 'object' && post.coverImage.url ? (
-        <Image
-          src={post.coverImage.url}
-          alt={post.coverImage.alt || 'Cover Image'}
-          width={600}
-          height={400}
-        />
-      ) : (
-        <p>No cover image available</p>
-      )}
-      {post.content && <RichText data={post.content} />}
-      <RenderBlocks blocks={post.BlockTest} />
+        <h1>{post.title}</h1>
+        <p>Slug: {post.slug}</p>
+        {post.coverImage &&
+        typeof post.coverImage === 'object' &&
+        post.coverImage.url ? (
+          <Image
+            src={post.coverImage.url}
+            alt={post.coverImage.alt || 'Cover Image'}
+            width={600}
+            height={400}
+          />
+        ) : (
+          <p>No cover image available</p>
+        )}
+        {post.content && <RichText data={post.content} />}
+        <RenderBlocks blocks={post.BlockTest} />
 
-      <p>Status: {post._status}</p>
-      <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
-      <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
-      <p>Draft: {draft ? 'Yes' : 'No'}</p>
-      <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
-    </div>
+        <p>Status: {post._status}</p>
+        <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
+        <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
+        <p>Draft: {draft ? 'Yes' : 'No'}</p>
+        <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
+      </div>
+    </>
   )
 }
 
@@ -113,5 +129,3 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 
   return result.docs?.[0] || null
 })
-
-

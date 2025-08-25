@@ -156,6 +156,14 @@ export interface Media {
    * Alternative text for the image, used for accessibility and SEO
    */
   alt: string;
+  /**
+   * Credit for the image, e.g. source
+   */
+  creditText?: string | null;
+  /**
+   * Nom du photographe ou de l'illustrateur
+   */
+  photographe?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -355,6 +363,8 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   nom?: T;
   alt?: T;
+  creditText?: T;
+  photographe?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

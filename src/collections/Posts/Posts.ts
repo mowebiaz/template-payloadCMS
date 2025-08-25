@@ -128,7 +128,7 @@ export const Posts: CollectionConfig = {
                 afterChange: [afterChangeFieldHook],
                 afterRead: [],
                 beforeDuplicate: [],
-              }
+              },
             },
 
             {
@@ -193,13 +193,14 @@ export const Posts: CollectionConfig = {
               type: 'text',
               hooks: {
                 beforeChange: [
-                  async({data, value}) => !value ? `https://example.com/posts/${data?.slug}` : value
-                ]
-              }
+                  async ({ data, value }) =>
+                    !value ? `https://example.com/posts/${data?.slug}` : value,
+                ],
+              },
             },
             PreviewField({
               hasGenerateFn: true,
-                            titlePath: 'meta.title',
+              titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
             OverviewField({
@@ -214,6 +215,6 @@ export const Posts: CollectionConfig = {
   ],
 
   hooks: {
-    afterError: [afterErrorHook]
+    afterError: [afterErrorHook],
   },
 }

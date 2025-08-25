@@ -26,7 +26,22 @@ export const Media: CollectionConfig = {
       admin: {
         description:
           'Alternative text for the image, used for accessibility and SEO',
-        //position: 'sidebar',
+      },
+    },
+    {
+      name: 'creditText',
+      type: 'text',
+      admin: {
+        description: 'Credit for the image, e.g. source',
+        placeholder: 'Image générée avec Midjourney',
+      },
+    },
+    {
+      name: 'photographe',
+      type: 'text',
+      admin: {
+        description: "Nom du photographe ou de l'illustrateur",
+        placeholder: 'Morgane Couvet',
       },
     },
   ],
@@ -36,7 +51,7 @@ export const Media: CollectionConfig = {
     },
     mimeTypes: ['image/*'],
     //staticDir: 'media',
-    
+
     // from payload v3.51.0
     //imageSizes: [{ name: 'small', fit: 'cover', width: 400, height: 400 }],
     //adminThumbnail: 'small',
