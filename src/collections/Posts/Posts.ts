@@ -17,6 +17,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { afterChangeFieldHook } from './fieldHooks'
 import { afterErrorHook } from './hooks'
+import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -215,6 +216,7 @@ export const Posts: CollectionConfig = {
   ],
 
   hooks: {
-    afterError: [afterErrorHook],
+    afterChange: [revalidatePost],
+    afterDelete: [revalidateDelete]
   },
 }
