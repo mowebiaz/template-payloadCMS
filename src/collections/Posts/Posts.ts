@@ -16,7 +16,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { afterChangeFieldHook } from './fieldHooks'
-import { afterErrorHook } from './hooks'
+//import { afterErrorHook } from './hooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 
 export const Posts: CollectionConfig = {

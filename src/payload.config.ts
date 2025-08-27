@@ -3,13 +3,15 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import { searchPlugin } from '@payloadcms/plugin-search'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
 import { Media } from './collections/Media'
 import { Users } from './collections/Users/config'
-import { Posts } from './collections/Posts'
+import { Posts } from './collections/Posts/Posts'
+import { beforeSyncWithSearch } from './components/Search/beforeSync'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -62,7 +64,7 @@ export default buildConfig({
   editor: lexicalEditor(),
 
   // Define and configure your collections in this array
-  collections: [Users, Media, Posts],
+  collections: [Posts, Media, Users],
 
   // Your Payload secret - should be a complex and secure string, unguessable
   secret: process.env.PAYLOAD_SECRET || '',
@@ -77,24 +79,70 @@ export default buildConfig({
     },
   }),
 
+  cors: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''],
+  csrf: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''],
+
+  upload: {
+    //whatever I upload across my entire payload projet to 5 million bytes
+    limits: {
+      fileSize: 5000000,
+    },
+  },
+
   // If you want to resize images, crop, set focal point, etc.
   // make sure to install it and pass it to the config.
   // This is optional - if you don't need to do these things,
   // you don't need it!
   sharp,
-  plugins: [seoPlugin({
-/*     collections: ['posts'],
+
+  hooks: {
+    afterError: [
+      (error) => {
+        console.error('An error occurred:', error)
+      },
+    ],
+  },
+
+  plugins: [
+    seoPlugin({
+      /*     collections: ['posts'],
     uploadsCollection: 'media', */
-    generateTitle: ({doc}) => doc.title,
-    //generateDescription: ({doc}) => doc.excerpt,
-    generateDescription: ({doc}) => doc.plaintext,
-    generateURL: ({doc, collectionSlug}) => `http://localhost:3000/${collectionSlug}/${doc?.slug}`,
-/*     tabbedUI: true,
+      generateTitle: ({ doc }) => doc.title,
+      //generateDescription: ({doc}) => doc.excerpt,
+      generateDescription: ({ doc }) => doc.plaintext,
+      generateURL: ({ doc, collectionSlug }) =>
+        `http://localhost:3000/${collectionSlug}/${doc?.slug}`,
+      /*     tabbedUI: true,
     fields: ({defaultFields}) => [
       ...defaultFields,
       {name: 'canonicalURL', type: 'text'},
     ] */
-  })]
+    }),
+    searchPlugin({
+      collections: ['posts'],
+      localize: false,
+      defaultPriorities: { posts: 20 },
+      searchOverrides: {
+        slug: 'search-results',
+        labels: {
+          singular: 'Search Result',
+          plural: 'Search Results',
+        },
+        admin: {
+          group: 'Search',
+        },
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
+          { name: 'excerpt', type: 'textarea' },
+          { name: 'slug', type: 'text' },
+        ],
+      },
+      beforeSync: beforeSyncWithSearch,
+      syncDrafts: false, // default is false
+      deleteDrafts: true, // default is true
+      reindexBatchSize: 50,
+    }),
+  ],
 
   // To make documents created before enabling draft mode visible in the admin field
   /*   onInit: async (payload) => {
