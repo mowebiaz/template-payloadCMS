@@ -18,6 +18,7 @@ import {
 import { afterChangeFieldHook } from './fieldHooks'
 //import { afterErrorHook } from './hooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import { notifyOnChange, notifyOnDelete } from './hooks/notifyOnChange'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -216,7 +217,7 @@ export const Posts: CollectionConfig = {
   ],
 
   hooks: {
-    afterChange: [revalidatePost],
-    afterDelete: [revalidateDelete]
+    afterChange: [revalidatePost, notifyOnChange],
+    afterDelete: [revalidateDelete, notifyOnDelete],
   },
 }

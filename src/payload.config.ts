@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { Users } from './collections/Users/config'
 import { Posts } from './collections/Posts/Posts'
 import { beforeSyncWithSearch } from './components/Search/beforeSync'
+import { resendAdapter } from '@payloadcms/email-resend'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -88,6 +89,11 @@ export default buildConfig({
       fileSize: 5000000,
     },
   },
+  email: resendAdapter({
+    defaultFromAddress: 'onboarding@resend.dev',
+    defaultFromName: 'Mowebiaz de Payload CMS',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
 
   // If you want to resize images, crop, set focal point, etc.
   // make sure to install it and pass it to the config.
