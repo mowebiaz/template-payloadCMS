@@ -31,6 +31,7 @@ export const Posts: CollectionConfig = {
           {
             _status: { equals: 'published' },
           },
+          { _status: { exists: false } },
         ],
       }
     },
@@ -57,6 +58,7 @@ export const Posts: CollectionConfig = {
           collection: 'posts',
           req,
         })
+        console.log('Preview URL:', path)
         return path
       },
     },
@@ -66,9 +68,9 @@ export const Posts: CollectionConfig = {
     drafts: {
       autosave: { interval: 100 },
       //schedulePublish: true,
-      //validate: true,
+      //validate: false,
     },
-    maxPerDoc: 50,
+    maxPerDoc: 100,
   },
 
   /*   defaultPopulate: {

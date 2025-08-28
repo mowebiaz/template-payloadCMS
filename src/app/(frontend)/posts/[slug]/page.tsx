@@ -46,7 +46,10 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   //const url = '/posts/' + slug
   const post = await queryPostBySlug({ slug })
-  const schema = [articleSchema(post), post.meta?.image && imageSchema(post.meta.image as Media)].filter(Boolean)
+  const schema = [
+    articleSchema(post),
+    post.meta?.image && imageSchema(post.meta.image as Media),
+  ].filter(Boolean)
   //const schema = [imageSchema(post.meta?.image as Media), articleSchema(post)]
 
   if (!post) {
@@ -108,7 +111,6 @@ export async function generateMetadata({
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const headers = await getHeaders()
-  const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers })
@@ -117,8 +119,6 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     collection: 'posts',
     overrideAccess: Boolean(user),
     draft: Boolean(user),
-    //draft,
-    //overrideAccess: draft,
     limit: 1,
     where: {
       slug: {

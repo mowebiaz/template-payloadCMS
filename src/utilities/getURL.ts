@@ -1,3 +1,5 @@
+import canUseDM from './canUseDM'
+
 export const getServerSideURL = () => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL
 
@@ -8,4 +10,17 @@ export const getServerSideURL = () => {
     url = 'http://localhost:3000'
   }
   return url
+}
+
+export const getClientSideURL = () => {
+  if (canUseDM) {
+    const { protocol, hostname, port } = window.location
+    return `${protocol}//${hostname}${port ? `:${port}` : ''}`
+  }
+
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  }
+
+  return process.env.NEXT_PUBLIC_CLIENT_URL || ''
 }
