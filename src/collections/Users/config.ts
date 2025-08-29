@@ -18,21 +18,16 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
-  defaultPopulate: {
+/*   defaultPopulate: {
     slug: true,
     name: true,
-  },
+  }, */
   fields: [
     {
       name: 'avatar',
       type: 'upload',
       relationTo: 'media',
     },
-    /*     {
-      name: 'active',
-      type: 'checkbox',
-      defaultValue: false,
-    }, */
     {
       name: 'roles',
       type: 'select',

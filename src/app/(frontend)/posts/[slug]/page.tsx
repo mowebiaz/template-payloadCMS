@@ -6,7 +6,6 @@ import { draftMode } from 'next/headers'
 import { RichText } from '@/components/RichText/RichText'
 import { format } from 'date-fns'
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
 import { headers as getHeaders } from 'next/headers'
 import { RenderBlocks } from '@/blocks'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -14,6 +13,7 @@ import { Metadata } from 'next'
 import { articleSchema, imageSchema } from '@/components/Schema/Schema'
 import type { Media, Post } from '@/payload-types'
 import Script from 'next/script'
+import { Redirects } from '@/components/Redirects/Redirects'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -41,27 +41,31 @@ export async function generateStaticParams() {
 }
 
 type Args = { params: Promise<{ slug?: string }> }
+
 export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const { isEnabled: draft } = await draftMode()
-  //const url = '/posts/' + slug
+  const url = '/posts/' + slug
   const post = await queryPostBySlug({ slug })
   const schema = [
     articleSchema(post),
     post.meta?.image && imageSchema(post.meta.image as Media),
   ].filter(Boolean)
-  //const schema = [imageSchema(post.meta?.image as Media), articleSchema(post)]
 
+  // check if there is no page to return.
+  // If there isn't, it check if there is a redirect or not.
+  // if not, return the not found page
   if (!post) {
-    return <div>Post not found</div>
-  }
-
-  if (!slug) {
-    return <div>Slug is required</div>
+    return <Redirects url={url} />
   }
 
   return (
     <>
+      {/* for valid page that we want to redirect */}
+      <Redirects
+        url={url}
+        disableNotFound
+      />
       <Script
         id="schema-script"
         type={'application/ld+json'}

@@ -4,6 +4,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { en } from '@payloadcms/translations/languages/en'
@@ -13,6 +14,7 @@ import { Users } from './collections/Users/config'
 import { Posts } from './collections/Posts/Posts'
 import { beforeSyncWithSearch } from './components/Search/beforeSync'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -154,6 +156,30 @@ export default buildConfig({
       syncDrafts: false, // default is false
       deleteDrafts: true, // default is true
       reindexBatchSize: 50,
+    }),
+    redirectsPlugin({
+      collections: ['posts'],
+      redirectTypes: ['301', '302'],
+      overrides: {
+        fields: ({ defaultFields }) => [
+          {
+            type: 'checkbox',
+            name: 'active',
+            defaultValue: true,
+          },
+          ...defaultFields,
+        ],
+        hooks: {
+          afterChange: [revalidateRedirects],
+        },
+        admin: {
+          group: 'Navigation',
+        },
+      },
+      redirectTypeFieldOverride: {
+        //label: 'Redirect Type (Overwrittent)',
+        admin: { description: 'Choose the type of redirect to use' },
+      },
     }),
   ],
 
