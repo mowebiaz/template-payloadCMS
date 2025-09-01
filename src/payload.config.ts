@@ -15,6 +15,7 @@ import { Posts } from './collections/Posts/Posts'
 import { beforeSyncWithSearch } from './components/Search/beforeSync'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
+import { Logos } from './globals/Logos'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,6 +36,60 @@ export default buildConfig({
         { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
         { label: 'Desktop', name: 'desktop', width: 1440, height: 1080 },
       ],
+    },
+    components: {
+      /*       logout: {
+        //Button: '@/components/Admin/ui/Logout#Logout',
+        Button: {
+          path: '@/components/Admin/ui/logout.tsx',
+          exportName: 'Logout',
+        },
+      }, */
+      beforeNavLinks: [],
+      afterNavLinks: [],
+      beforeDashboard: [
+        {
+          path: '@/components/Admin/ui/beforeDashboard.tsx',
+          exportName: 'Welcome',
+        },
+      ],
+      afterDashboard: [
+        {
+          path: '@/components/Admin/ui/afterDashboard.tsx',
+          exportName: 'Outro',
+        },
+      ],
+      beforeLogin: [
+        {
+          path: '@/components/Admin/ui/beforeLogin.tsx',
+          exportName: 'LinkToHome',
+        },
+      ],
+      afterLogin: [
+        {
+          path: '@/components/Admin/ui/afterLogin.tsx',
+          exportName: 'LoginInstruction',
+        },
+      ],
+      actions: [
+        { path: '@/components/Admin/ui/logout.tsx', exportName: 'Logout' },
+      ],
+      header: [
+        {
+          path: '@/components/Admin/ui/header.tsx',
+          exportName: 'Header',
+        },
+      ],
+/*       graphics: {
+        Logo: {
+          path: '@/components/Admin/ui/logo.tsx',
+          exportName: 'Logo',
+        },
+        Icon: {
+          path: '@/components/Admin/ui/icon.tsx',
+          exportName: 'Icon',
+        },
+      }, */
     },
     meta: {
       titleSuffix: ' - Mon application Payload',
@@ -75,6 +130,7 @@ export default buildConfig({
 
   // Define and configure your collections in this array
   collections: [Posts, Media, Users],
+  globals: [Logos],
 
   // Your Payload secret - should be a complex and secure string, unguessable
   secret: process.env.PAYLOAD_SECRET || '',

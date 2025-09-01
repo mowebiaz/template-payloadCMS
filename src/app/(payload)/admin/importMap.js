@@ -31,6 +31,12 @@ import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { default as default_b5a75d292585ff21027c2f22b1aa6d10 } from '@/components/Avatar.tsx'
+import { Header as Header_56fb1099419ddad146c11d020fe622b3 } from '@/components/Admin/ui/header.tsx'
+import { Logout as Logout_62f08f92b00a7306634db9272517c36a } from '@/components/Admin/ui/logout.tsx'
+import { Outro as Outro_f85720e69ac9bc2a5e3ee1e919825e22 } from '@/components/Admin/ui/afterDashboard.tsx'
+import { LoginInstruction as LoginInstruction_b7867967b91dbf7d5a30e5848bd2d55c } from '@/components/Admin/ui/afterLogin.tsx'
+import { Welcome as Welcome_fdae91cc357a05f8fe0bfc660eabd8ba } from '@/components/Admin/ui/beforeDashboard.tsx'
+import { LinkToHome as LinkToHome_e382423eb089a75a84a100230738ad6a } from '@/components/Admin/ui/beforeLogin.tsx'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -65,5 +71,11 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
-  "@/components/Avatar.tsx#default": default_b5a75d292585ff21027c2f22b1aa6d10
+  "@/components/Avatar.tsx#default": default_b5a75d292585ff21027c2f22b1aa6d10,
+  "@/components/Admin/ui/header.tsx#Header": Header_56fb1099419ddad146c11d020fe622b3,
+  "@/components/Admin/ui/logout.tsx#Logout": Logout_62f08f92b00a7306634db9272517c36a,
+  "@/components/Admin/ui/afterDashboard.tsx#Outro": Outro_f85720e69ac9bc2a5e3ee1e919825e22,
+  "@/components/Admin/ui/afterLogin.tsx#LoginInstruction": LoginInstruction_b7867967b91dbf7d5a30e5848bd2d55c,
+  "@/components/Admin/ui/beforeDashboard.tsx#Welcome": Welcome_fdae91cc357a05f8fe0bfc660eabd8ba,
+  "@/components/Admin/ui/beforeLogin.tsx#LinkToHome": LinkToHome_e382423eb089a75a84a100230738ad6a
 }
