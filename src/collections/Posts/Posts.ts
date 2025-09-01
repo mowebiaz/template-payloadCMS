@@ -105,6 +105,14 @@ export const Posts: CollectionConfig = {
               name: 'title',
               type: 'text',
               required: true,
+              admin: {
+                components: {
+                  Cell: {
+                    path: 'src/components/Admin/Fields/Cell.tsx',
+                    exportName: 'TitleCell',
+                  }
+                }
+              }
               /*       admin: {
         className: 'title-field',
         style: {
@@ -118,15 +126,30 @@ export const Posts: CollectionConfig = {
               type: 'text',
               required: true,
               unique: true,
+/*               admin: {
+                components: {
+                  Field: {
+                    path: 'src/components/Admin/Fields/CustomTextField.tsx',
+                    exportName: 'CustomTextField',
+                  }
+                }
+              } */
             },
 
             {
               name: 'coverImage',
               type: 'upload',
+              label: 'Image de couverture du post',
               relationTo: 'media',
               required: false,
               admin: {
                 description: 'Image de couverture du post',
+/*                 components: {
+                  Label: {
+                    path: 'src/components/Admin/Fields/Label.tsx',
+                    exportName: 'CustomTextLabel',
+                  }
+                } */
               },
             },
             {
@@ -236,7 +259,7 @@ export const Posts: CollectionConfig = {
   ],
 
   hooks: {
-    afterChange: [revalidatePost, notifyOnChange],
-    afterDelete: [revalidateDelete, notifyOnDelete],
+    afterChange: [revalidatePost],
+    afterDelete: [revalidateDelete],
   },
 }
