@@ -28,6 +28,9 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { AfterListContent as AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962 } from 'src/collections/Posts/components/afterList.tsx'
+import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c } from 'src/collections/Posts/components/beforeList.tsx'
+import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { default as default_b5a75d292585ff21027c2f22b1aa6d10 } from '@/components/Avatar.tsx'
@@ -69,6 +72,9 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  "src/collections/Posts/components/afterList.tsx#AfterListContent": AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962,
+  "src/collections/Posts/components/beforeList.tsx#BeforeListContent": BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c,
+  "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/components/Avatar.tsx#default": default_b5a75d292585ff21027c2f22b1aa6d10,

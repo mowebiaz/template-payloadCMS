@@ -44,12 +44,29 @@ export const Posts: CollectionConfig = {
   admin: {
     //group: 'posts',
     description: 'Collection for blog posts',
+    listSearchableFields: ['title','slug'],
+    components: {
+      beforeList: [{
+        path: 'src/collections/Posts/components/beforeList.tsx',
+        exportName: 'BeforeListContent',
+      }],
+      afterList: [
+        {
+          path: 'src/collections/Posts/components/afterList.tsx',
+          exportName: 'AfterListContent',
+        }
+      ],
+      beforeListTable: [{
+        path: 'src/collections/Posts/components/PostsByStatus.tsx',
+        exportName: 'PostsByStatus',
+      }]
+    },
     meta: {
       titleSuffix: ' - blog',
       title: 'mon blog',
     },
-    defaultColumns: ['title', 'createdAt', 'updatedAt'],
-    useAsTitle: 'title',
+    defaultColumns: ['title', 'createdAt', 'updatedAt', '_status'],
+    //useAsTitle: 'title',
     //hideAPIURL: true,
     livePreview: {
       url: ({ data, req }) => {
