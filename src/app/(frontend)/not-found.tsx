@@ -6,8 +6,7 @@ export default function NotFound() {
       <h1>404</h1>
       <h2>Ce post n&apos;existe pas</h2>
       <p>
-        Retourner à l&apos;
-        <Link href="/">accueil</Link>
+        Retourner à la <Link href="/posts">liste des articles</Link>
       </p>
     </main>
   )

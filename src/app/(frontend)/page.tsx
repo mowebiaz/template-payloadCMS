@@ -13,6 +13,8 @@ export default async function Home() {
     {user ? 'Bienvenue ' + user.email + ' ' + user.roles?.map(role => role) : 'Bienvenue visiteur'}
       <h1>Home page</h1>
       <Link href={'/posts'}>Tous les posts</Link>
+      <Link href={'/search'}>Rechercher</Link>
+      <Link href={'/contact'}>Contact</Link>
     </>
   )
 }

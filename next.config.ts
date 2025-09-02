@@ -1,8 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 import { withPayload } from '@payloadcms/next/withPayload'
 
 const nextConfig: NextConfig = {
-    webpack: (webpackConfig) => {
+  experimental: { 
+    globalNotFound: true 
+  },
+  webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
@@ -11,6 +14,6 @@ const nextConfig: NextConfig = {
 
     return webpackConfig
   },
-};
+}
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
