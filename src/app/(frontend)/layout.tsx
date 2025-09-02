@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import type { Metadata } from 'next'
 import './globals.css'
+import { AdminBar } from '@/components/AdminBar/AdminBar'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <AdminBar />
         {children}
       </body>
     </html>

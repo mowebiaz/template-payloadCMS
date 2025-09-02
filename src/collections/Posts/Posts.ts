@@ -75,10 +75,16 @@ export const Posts: CollectionConfig = {
           collection: 'posts',
           req,
         })
-        console.log('Preview URL:', path)
+        console.log('livePreview URL:', path)
         return path
       },
     },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'posts',
+        req,
+      }),
   },
 
   versions: {
