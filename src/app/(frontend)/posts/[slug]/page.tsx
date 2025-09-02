@@ -19,8 +19,6 @@ export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
     collection: 'posts',
-    //draft: false,
-    //overrideAccess: false,
     limit: 1000,
     select: { slug: true },
   })
@@ -47,17 +45,20 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const url = '/posts/' + slug
   const post = await queryPostBySlug({ slug })
-  const schema = [
-    articleSchema(post),
-    post.meta?.image && imageSchema(post.meta.image as Media),
-  ].filter(Boolean)
 
-  // check if there is no page to return.
+    // check if there is no page to return.
   // If there isn't, it check if there is a redirect or not.
   // if not, return the not found page
   if (!post) {
     return <Redirects url={url} />
   }
+  
+  const schema = [
+    articleSchema(post),
+    post.meta?.image && imageSchema(post?.meta.image as Media),
+  ].filter(Boolean)
+
+
 
   return (
     <>
@@ -66,6 +67,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         url={url}
         disableNotFound
       />
+      
       <Script
         id="schema-script"
         type={'application/ld+json'}

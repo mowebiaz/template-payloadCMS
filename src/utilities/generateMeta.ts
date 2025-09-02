@@ -30,7 +30,7 @@ export const generateMeta = async (args: {
   const description = doc?.meta?.description ? doc.meta.description : ''
   const url = doc?.meta?.canonicalUrl
     ? doc.meta.canonicalUrl
-    : Array.isArray(doc.slug)
+    : Array.isArray(doc?.slug)
       ? doc.slug.join('/')
       : '/'
 

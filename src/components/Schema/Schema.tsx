@@ -1,14 +1,14 @@
 import type { Post, Media } from '@/payload-types'
 
 export const articleSchema = (props: Post) => {
-  const image = props.meta?.image as Media | undefined
+  //const image = props.meta?.image as Media | undefined
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: props.title,
-    datePublished: new Date(props.createdAt),
-    dateModified: new Date(props.updatedAt),
+    datePublished: new Date(props?.createdAt).toISOString(),
+    dateModified: new Date(props?.updatedAt).toISOString(),
     /* à revoir */
     //image: [`${monchemindeblob}/${image?.filename}`],
     author: {
