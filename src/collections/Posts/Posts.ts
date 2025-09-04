@@ -19,6 +19,7 @@ import { afterChangeFieldHook } from './fieldHooks'
 //import { afterErrorHook } from './hooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 import { notifyOnChange, notifyOnDelete } from './hooks/notifyOnChange'
+import { CustomBlockIcon } from '@/components/RichText/CustomBlockIcon'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -36,6 +37,11 @@ export const Posts: CollectionConfig = {
       }
     },
   },
+    /* Pour versions futures
+  trash: true,
+   admin: {
+    groupBy: true,
+  }, */
   labels: {
     singular: 'Article',
     plural: 'Articles',
@@ -44,22 +50,26 @@ export const Posts: CollectionConfig = {
   admin: {
     //group: 'posts',
     description: 'Collection for blog posts',
-    listSearchableFields: ['title','slug'],
+    listSearchableFields: ['title', 'slug'],
     components: {
-      beforeList: [{
-        path: 'src/collections/Posts/components/beforeList.tsx',
-        exportName: 'BeforeListContent',
-      }],
+      beforeList: [
+        {
+          path: 'src/collections/Posts/components/beforeList.tsx',
+          exportName: 'BeforeListContent',
+        },
+      ],
       afterList: [
         {
           path: 'src/collections/Posts/components/afterList.tsx',
           exportName: 'AfterListContent',
-        }
+        },
       ],
-      beforeListTable: [{
-        path: 'src/collections/Posts/components/PostsByStatus.tsx',
-        exportName: 'PostsByStatus',
-      }]
+      beforeListTable: [
+        {
+          path: 'src/collections/Posts/components/PostsByStatus.tsx',
+          exportName: 'PostsByStatus',
+        },
+      ],
     },
     meta: {
       titleSuffix: ' - blog',
@@ -125,7 +135,7 @@ export const Posts: CollectionConfig = {
               type: 'text',
               required: true,
               unique: true,
-/*               admin: {
+              /*               admin: {
                 components: {
                   Field: {
                     path: 'src/components/Admin/Fields/CustomTextField.tsx',
@@ -143,7 +153,7 @@ export const Posts: CollectionConfig = {
               required: false,
               admin: {
                 description: 'Image de couverture du post',
-/*                 components: {
+                /*                 components: {
                   Label: {
                     path: 'src/components/Admin/Fields/Label.tsx',
                     exportName: 'CustomTextLabel',
@@ -185,18 +195,31 @@ export const Posts: CollectionConfig = {
                   placeholder: 'Ecrivez votre article ici...',
                 },
                 features: ({ defaultFeatures }) => [
-                  FixedToolbarFeature(),
-                  //...defaultFeatures,
-                  ...defaultFeatures.filter(
+                                    ...defaultFeatures,
+
+                  /*                   ...defaultFeatures.filter(
                     (feature) => !['inlineCode'].includes(feature.key),
-                  ),
+                  ), */
+                  FixedToolbarFeature({
+                    customGroups: {
+                      'blocks': {
+                        order: 100,
+                        ChildComponent: CustomBlockIcon,
+                      },
+                      'add': {
+                        order: 90,
+                        type: 'buttons'
+                      }
+                    }
+                  }),
+
                   BlocksFeature({
                     blocks: [ContentWithMedia, TableOfContent],
                   }),
                 ],
               }),
             },
-            {
+            /*             {
               type: 'blocks',
               admin: {
                 initCollapsed: true,
@@ -205,13 +228,13 @@ export const Posts: CollectionConfig = {
               blocks: [ContentWithMedia, TableOfContent],
               name: 'BlockTest',
               label: false,
-              /*       labels: {
-        singular: 'Content with Media Block',
-        plural: 'Content with Media Blocks',
-      }, */
+              labels: {
+                singular: 'Content with Media Block',
+                plural: 'Content with Media Blocks',
+              },
               minRows: 1,
               maxRows: 20,
-            },
+            }, */
           ],
         },
         {

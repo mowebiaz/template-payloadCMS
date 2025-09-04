@@ -19,3 +19,10 @@
   background-color: #00ECAE;
 }
 
+.selected--draft > span {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: gray;
+  color: black;
+}
+

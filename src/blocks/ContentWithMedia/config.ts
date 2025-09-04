@@ -10,7 +10,7 @@ export const ContentWithMedia: Block = {
     singular: 'Content with Media Block',
     plural: 'Content with Media Blocks',
   },
-  imageURL: 'https//google.com/path/to/image',
+  imageURL: 'https://cdn.pixabay.com/photo/2021/02/27/06/08/lines-6053765_1280.png',
   imageAltText: 'bloc avec une image et du texte',
   fields: [
     {

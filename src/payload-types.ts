@@ -160,7 +160,6 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
-  BlockTest?: (ContentWithMedia | ToCProps)[] | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -206,48 +205,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentWithMedia".
- */
-export interface ContentWithMedia {
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  imageBlock?: (number | null) | Media;
-  textPosition?: ('Left' | 'Right') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contentWithMedia';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ToCProps".
- */
-export interface ToCProps {
-  Content?:
-    | {
-        header?: string | null;
-        link?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'tableOfContents';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -399,12 +356,6 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   plaintext?: T;
   content?: T;
-  BlockTest?:
-    | T
-    | {
-        contentWithMedia?: T | ContentWithMediaSelect<T>;
-        tableOfContents?: T | ToCPropsSelect<T>;
-      };
   meta?:
     | T
     | {
@@ -416,32 +367,6 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentWithMedia_select".
- */
-export interface ContentWithMediaSelect<T extends boolean = true> {
-  content?: T;
-  imageBlock?: T;
-  textPosition?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ToCProps_select".
- */
-export interface ToCPropsSelect<T extends boolean = true> {
-  Content?:
-    | T
-    | {
-        header?: T;
-        link?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -578,6 +503,48 @@ export interface LogosSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia".
+ */
+export interface ContentWithMedia {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  imageBlock?: (number | null) | Media;
+  textPosition?: ('Left' | 'Right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithMedia';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToCProps".
+ */
+export interface ToCProps {
+  Content?:
+    | {
+        header?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableOfContents';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
