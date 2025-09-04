@@ -111,14 +111,7 @@ export const Posts: CollectionConfig = {
               name: 'title',
               type: 'text',
               required: true,
-              admin: {
-                components: {
-                  Cell: {
-                    path: 'src/components/Admin/Fields/Cell.tsx',
-                    exportName: 'TitleCell',
-                  }
-                }
-              }
+
               /*       admin: {
         className: 'title-field',
         style: {
