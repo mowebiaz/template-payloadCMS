@@ -46,19 +46,17 @@ export default async function Post({ params: paramsPromise }: Args) {
   const url = '/posts/' + slug
   const post = await queryPostBySlug({ slug })
 
-    // check if there is no page to return.
+  // check if there is no page to return.
   // If there isn't, it check if there is a redirect or not.
   // if not, return the not found page
   if (!post) {
     return <Redirects url={url} />
   }
-  
+
   const schema = [
     articleSchema(post),
     post.meta?.image && imageSchema(post?.meta.image as Media),
   ].filter(Boolean)
-
-
 
   return (
     <>
@@ -67,7 +65,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         url={url}
         disableNotFound
       />
-      
+
       <Script
         id="schema-script"
         type={'application/ld+json'}
@@ -92,8 +90,11 @@ export default async function Post({ params: paramsPromise }: Args) {
         ) : (
           <p>No cover image available</p>
         )}
+
         {post.content && <RichText data={post.content} />}
         <RenderBlocks blocks={post.BlockTest} />
+
+        {/* {post.content && <GenerateHtml data={post.content} />} */}
 
         <p>Status: {post._status}</p>
         <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
