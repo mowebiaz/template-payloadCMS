@@ -35,6 +35,15 @@ a {
   text-decoration: none;
 }
 
+blockquote {
+  border-left: 4px solid var(--foreground);
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1rem;
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

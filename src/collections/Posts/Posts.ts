@@ -3,6 +3,9 @@ import {
   BlocksFeature,
   FixedToolbarFeature,
   lexicalEditor,
+  TextStateFeature,
+  defaultColors,
+  HeadingFeature,
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import editor from '../Users/access/editor'
@@ -37,7 +40,7 @@ export const Posts: CollectionConfig = {
       }
     },
   },
-    /* Pour versions futures
+  /* Pour versions futures
   trash: true,
    admin: {
     groupBy: true,
@@ -195,26 +198,68 @@ export const Posts: CollectionConfig = {
                   placeholder: 'Ecrivez votre article ici...',
                 },
                 features: ({ defaultFeatures }) => [
-                                    ...defaultFeatures,
+                  //...defaultFeatures,
 
-                  /*                   ...defaultFeatures.filter(
-                    (feature) => !['inlineCode'].includes(feature.key),
-                  ), */
+                  ...defaultFeatures.filter(
+                    (feature) =>
+                      !['inlineCode', 'heading'].includes(feature.key),
+                  ),
+                  HeadingFeature({
+                    enabledHeadingSizes: ['h2', 'h3', 'h4', 'h5', 'h6'],
+                  }),
                   FixedToolbarFeature({
                     customGroups: {
-                      'blocks': {
+                      blocks: {
                         order: 100,
                         ChildComponent: CustomBlockIcon,
                       },
-                      'add': {
+                      add: {
                         order: 90,
-                        type: 'buttons'
-                      }
-                    }
+                        type: 'buttons',
+                      },
+                    },
                   }),
 
                   BlocksFeature({
                     blocks: [ContentWithMedia, TableOfContent],
+                  }),
+                  TextStateFeature({
+                    state: {
+                      color: {
+                        ...defaultColors.text,
+                        black: {
+                          label: 'Black',
+                          css: {
+                            color: '#000000',
+                          },
+                        },
+                      },
+                      background: {
+                        ...defaultColors.background,
+                        greenmw: {
+                          label: 'Green - MW',
+                          css: {
+                            'background-color': '#00ECAE',
+                          },
+                        },
+                      },
+                      size: {
+                        large: {
+                          label: 'Large text',
+                          css: {
+                            'font-size': 'large',
+                          },
+                        },
+                      },
+                      underline: {
+                        dashed: {
+                          label: 'Dashed',
+                          css: {
+                            'text-decoration': 'underline dashed',
+                          },
+                        },
+                      },
+                    },
                   }),
                 ],
               }),
