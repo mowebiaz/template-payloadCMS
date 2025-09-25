@@ -23,6 +23,7 @@ import { afterChangeFieldHook } from './fieldHooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 import { notifyOnChange, notifyOnDelete } from './hooks/notifyOnChange'
 import { CustomBlockIcon } from '@/components/RichText/CustomBlockIcon'
+import { slugField } from '@/components/Admin/Fields/slug/slugField'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -40,6 +41,11 @@ export const Posts: CollectionConfig = {
       }
     },
   },
+  defaultPopulate: {
+    title: true,
+    slug: true,
+    categories: true,
+  },
   /* Pour versions futures
   trash: true,
    admin: {
@@ -52,6 +58,23 @@ export const Posts: CollectionConfig = {
 
   admin: {
     //group: 'posts',
+    livePreview: {
+      url: ({ data, req }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'posts',
+          req,
+        })
+        return path
+      },
+    },
+    useAsTitle: 'title',
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'posts',
+        req,
+      }),
     description: 'Collection for blog posts',
     listSearchableFields: ['title', 'slug'],
     components: {
@@ -81,23 +104,6 @@ export const Posts: CollectionConfig = {
     defaultColumns: ['title', 'createdAt', 'updatedAt', '_status'],
     //useAsTitle: 'title',
     //hideAPIURL: true,
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'posts',
-          req,
-        })
-        console.log('livePreview URL:', path)
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'posts',
-        req,
-      }),
   },
 
   versions: {
@@ -109,45 +115,18 @@ export const Posts: CollectionConfig = {
     maxPerDoc: 100,
   },
 
-  /*   defaultPopulate: {
-    title: true,
-    slug: true,
-  }, */
   fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
     {
       type: 'tabs',
       tabs: [
         {
           label: 'content',
           fields: [
-            {
-              name: 'title',
-              type: 'text',
-              required: true,
-
-              /*       admin: {
-        className: 'title-field',
-        style: {
-          backgroundColor: 'red',
-
-        }
-      }, */
-            },
-            {
-              name: 'slug',
-              type: 'text',
-              required: true,
-              unique: true,
-              /*               admin: {
-                components: {
-                  Field: {
-                    path: 'src/components/Admin/Fields/CustomTextField.tsx',
-                    exportName: 'CustomTextField',
-                  }
-                }
-              } */
-            },
-
             {
               name: 'coverImage',
               type: 'upload',
@@ -185,6 +164,12 @@ export const Posts: CollectionConfig = {
                 afterRead: [],
                 beforeDuplicate: [],
               },
+            },
+            {
+              name: 'categories',
+              type: 'relationship',
+              relationTo: 'categories',
+              hasMany: true,
             },
 
             {
@@ -323,6 +308,7 @@ export const Posts: CollectionConfig = {
         },
       ],
     },
+    ...slugField(),
   ],
 
   hooks: {

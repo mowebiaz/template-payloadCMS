@@ -70,6 +70,7 @@ export interface Config {
     posts: Post;
     media: Media;
     users: User;
+    categories: Category;
     'search-results': SearchResult;
     redirects: Redirect;
     'payload-locked-documents': PayloadLockedDocument;
@@ -81,6 +82,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -132,7 +134,6 @@ export interface UserAuthOperations {
 export interface Post {
   id: number;
   title: string;
-  slug: string;
   /**
    * Image de couverture du post
    */
@@ -145,6 +146,7 @@ export interface Post {
    * Texte brut de l'article, utilisé pour le SEO
    */
   plaintext: string;
+  categories?: (number | Category)[] | null;
   content?: {
     root: {
       type: string;
@@ -169,6 +171,8 @@ export interface Post {
     image?: (number | null) | Media;
     canonicalUrl?: string | null;
   };
+  slug: string;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -205,6 +209,16 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -296,6 +310,10 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
         relationTo: 'search-results';
         value: number | SearchResult;
       } | null)
@@ -351,10 +369,10 @@ export interface PayloadMigration {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   coverImage?: T;
   excerpt?: T;
   plaintext?: T;
+  categories?: T;
   content?: T;
   meta?:
     | T
@@ -364,6 +382,8 @@ export interface PostsSelect<T extends boolean = true> {
         image?: T;
         canonicalUrl?: T;
       };
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -414,6 +434,15 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

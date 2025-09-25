@@ -16,6 +16,7 @@ import { beforeSyncWithSearch } from './components/Search/beforeSync'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
 import { Logos } from './globals/Logos'
+import { Categories } from './collections/Categories'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -129,7 +130,7 @@ export default buildConfig({
   editor: lexicalEditor(),
 
   // Define and configure your collections in this array
-  collections: [Posts, Media, Users],
+  collections: [Posts, Media, Users, Categories],
   globals: [Logos],
 
   // Your Payload secret - should be a complex and secure string, unguessable

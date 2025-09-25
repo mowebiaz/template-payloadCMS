@@ -29,6 +29,7 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { SlugComponent as SlugComponent_87bd6d03759ea917eac9ad9783d68ef0 } from 'src/components/Admin/Fields/slug/SlugComponent'
 import { AfterListContent as AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962 } from 'src/collections/Posts/components/afterList.tsx'
 import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c } from 'src/collections/Posts/components/beforeList.tsx'
 import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
@@ -74,6 +75,7 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  "src/components/Admin/Fields/slug/SlugComponent#SlugComponent": SlugComponent_87bd6d03759ea917eac9ad9783d68ef0,
   "src/collections/Posts/components/afterList.tsx#AfterListContent": AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962,
   "src/collections/Posts/components/beforeList.tsx#BeforeListContent": BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c,
   "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
