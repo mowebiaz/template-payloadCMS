@@ -18,10 +18,8 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { afterChangeFieldHook } from './fieldHooks'
 //import { afterErrorHook } from './hooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-import { notifyOnChange, notifyOnDelete } from './hooks/notifyOnChange'
 import { CustomBlockIcon } from '@/components/RichText/CustomBlockIcon'
 import { slugField } from '@/components/Admin/Fields/slug/slugField'
 
@@ -75,7 +73,6 @@ export const Posts: CollectionConfig = {
         collection: 'posts',
         req,
       }),
-    description: 'Collection for blog posts',
     listSearchableFields: ['title', 'slug'],
     components: {
       beforeList: [
@@ -121,6 +118,7 @@ export const Posts: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    ...slugField(),
     {
       type: 'tabs',
       tabs: [
@@ -157,19 +155,6 @@ export const Posts: CollectionConfig = {
               admin: {
                 description: "Texte brut de l'article, utilisé pour le SEO",
               },
-              hooks: {
-                beforeValidate: [],
-                beforeChange: [],
-                afterChange: [afterChangeFieldHook],
-                afterRead: [],
-                beforeDuplicate: [],
-              },
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              relationTo: 'categories',
-              hasMany: true,
             },
 
             {
@@ -249,22 +234,50 @@ export const Posts: CollectionConfig = {
                 ],
               }),
             },
-            /*             {
-              type: 'blocks',
+          ],
+        },
+        {
+          label: 'Info',
+          fields: [
+            {
+              name: 'categories',
+              type: 'relationship',
+              relationTo: 'categories',
+              hasMany: true,
+            },
+            {
+              name: 'relatedPosts',
+              type: 'relationship',
+
+              filterOptions: ({ id }) => {
+                return {
+                  id: {
+                    not_in: [id],
+                  },
+                }
+              },
+              hasMany: true,
+              relationTo: 'posts',
+            },
+            {
+              name: 'publishedAt',
+              type: 'date',
               admin: {
-                initCollapsed: true,
-                isSortable: false,
+                date: {
+                  pickerAppearance: 'dayAndTime',
+                },
               },
-              blocks: [ContentWithMedia, TableOfContent],
-              name: 'BlockTest',
-              label: false,
-              labels: {
-                singular: 'Content with Media Block',
-                plural: 'Content with Media Blocks',
+              hooks: {
+                beforeChange: [
+                  ({ siblingData, value }) => {
+                    if (siblingData._status === 'published' && !value) {
+                      return new Date()
+                    }
+                    return value
+                  },
+                ],
               },
-              minRows: 1,
-              maxRows: 20,
-            }, */
+            },
           ],
         },
         {
@@ -308,7 +321,6 @@ export const Posts: CollectionConfig = {
         },
       ],
     },
-    ...slugField(),
   ],
 
   hooks: {

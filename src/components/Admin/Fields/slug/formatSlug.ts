@@ -5,8 +5,8 @@ export const formatSlug = (val: string): string =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')  // tout ce qui n'est pas alnum -> '-'
-    .replace(/^-+|-+$/g, '');     // trim des tirets
+    .replace(/[^a-z0-9]+/g, '-') 
+    .replace(/^-+|-+$/g, '');    
 
 export const formatSlugHook =
   (fallback: string): FieldHook =>

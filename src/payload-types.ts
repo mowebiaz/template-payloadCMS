@@ -126,14 +126,14 @@ export interface UserAuthOperations {
   };
 }
 /**
- * Collection for blog posts
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
   id: number;
   title: string;
+  slug: string;
+  slugLock?: boolean | null;
   /**
    * Image de couverture du post
    */
@@ -146,7 +146,6 @@ export interface Post {
    * Texte brut de l'article, utilisé pour le SEO
    */
   plaintext: string;
-  categories?: (number | Category)[] | null;
   content?: {
     root: {
       type: string;
@@ -162,6 +161,9 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  categories?: (number | Category)[] | null;
+  relatedPosts?: (number | Post)[] | null;
+  publishedAt?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -171,8 +173,6 @@ export interface Post {
     image?: (number | null) | Media;
     canonicalUrl?: string | null;
   };
-  slug: string;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -369,11 +369,15 @@ export interface PayloadMigration {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
+  slugLock?: T;
   coverImage?: T;
   excerpt?: T;
   plaintext?: T;
-  categories?: T;
   content?: T;
+  categories?: T;
+  relatedPosts?: T;
+  publishedAt?: T;
   meta?:
     | T
     | {
@@ -382,8 +386,6 @@ export interface PostsSelect<T extends boolean = true> {
         image?: T;
         canonicalUrl?: T;
       };
-  slug?: T;
-  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
