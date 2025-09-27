@@ -2,6 +2,8 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { format } from 'date-fns'
 import { headers as getHeaders } from 'next/headers'
+import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
+import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
 
 export default async function Posts() {
   const headers = await getHeaders()
@@ -15,15 +17,19 @@ export default async function Posts() {
     select: {
       title: true,
       slug: true,
+      categories: true,
       createdAt: true,
       updatedAt: true,
       id: true,
+      coverImage: true,
+      meta: true,
     },
   })
 
   return (
-    <div>
+    <>
       <h1>Tous les Posts</h1>
+      <ArticleCardContainer posts={posts.docs} />
       <ul>
         {posts.docs.map((post) => (
           <li key={post.id}>
@@ -37,6 +43,8 @@ export default async function Posts() {
         ))}
       </ul>
       <br></br>
+
+      <br />
       <p>Nombre de posts: {posts.totalDocs}</p>
       <p>Page actuelle: {posts.page}</p>
       <p>Nombre de pages: {posts.totalPages}</p>
@@ -123,7 +131,6 @@ export default async function Posts() {
         Nombre de posts sans tags:{' '}
         {posts.docs.length - posts.docs.filter((post) => post.tags).length}
       </p>
-      {/* Add your posts content here */}
-    </div>
+    </>
   )
 }

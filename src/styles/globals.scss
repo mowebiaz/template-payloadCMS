@@ -1,3 +1,6 @@
+@use'./variables' as *;
+@use'./mixins' as *;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -24,6 +27,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.container {
+  //max-width: 1280px;
+  padding: 1rem;
+  margin: auto;
+  @include md {
+    padding: 2rem;
+  }
+  @include lg {
+    padding: 2rem;
+  }
+  @include xl {
+    padding: 2rem;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -48,4 +66,16 @@ blockquote {
   html {
     color-scheme: dark;
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

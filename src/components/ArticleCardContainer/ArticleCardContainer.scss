@@ -1,0 +1,21 @@
+@use '@/styles/mixins' as *;
+
+.posts {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+    @include sm {
+        grid-template-columns: repeat(8, 1fr);
+    }
+
+    @include lg {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+    }
+
+    &__item {
+        grid-column: span 4;
+    }
+}
