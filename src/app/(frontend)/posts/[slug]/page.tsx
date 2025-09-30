@@ -14,6 +14,7 @@ import { articleSchema, imageSchema } from '@/components/Schema/Schema'
 import type { Media, Post } from '@/payload-types'
 import Script from 'next/script'
 import { Redirects } from '@/components/Redirects/Redirects'
+import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -92,7 +93,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         )}
 
         {post.content && <RichText data={post.content} />}
-        <RenderBlocks blocks={post.BlockTest} />
+        {/* <RenderBlocks blocks={post.BlockTest} /> */}
 
         {/* {post.content && <GenerateHtml data={post.content} />} */}
 
@@ -101,6 +102,9 @@ export default async function Post({ params: paramsPromise }: Args) {
         <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
         <p>Draft: {draft ? 'Yes' : 'No'}</p>
         <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
+
+
+
       </div>
     </>
   )

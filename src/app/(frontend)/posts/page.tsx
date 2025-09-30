@@ -2,8 +2,9 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { format } from 'date-fns'
 import { headers as getHeaders } from 'next/headers'
-import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
+import { PageRange } from '@/components/Pagination/PageRange'
+import { Pagination } from '@/components/Pagination/Pagination'
 
 export default async function Posts() {
   const headers = await getHeaders()
@@ -14,6 +15,8 @@ export default async function Posts() {
     collection: 'posts',
     overrideAccess: Boolean(user),
     draft: Boolean(user),
+    depth:1,
+    limit: 5,
     select: {
       title: true,
       slug: true,
@@ -29,20 +32,13 @@ export default async function Posts() {
   return (
     <>
       <h1>Tous les Posts</h1>
+      <PageRange collection="posts" currentPage={posts.page} limit={posts.limit} totalDocs={posts.totalDocs} />
       <ArticleCardContainer posts={posts.docs} />
-      <ul>
-        {posts.docs.map((post) => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <a href={`/posts/${post.slug}`}>lien vers le post</a>
-            <p>Slug: {post.slug}</p>
-            <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
-            <p>ID du post: {post.id}</p>
-            <p>---------------------</p>
-          </li>
-        ))}
-      </ul>
-      <br></br>
+      {posts.totalPages > 1 && posts.page && (
+        <Pagination page={posts.page} totalPages={posts.totalPages } />
+      )}
+
+
 
       <br />
       <p>Nombre de posts: {posts.totalDocs}</p>

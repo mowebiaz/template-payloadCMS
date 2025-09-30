@@ -1,0 +1,145 @@
+/* ===== Base ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    border-radius: 0.25rem;
+
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+
+    background: transparent;
+    color: var(--foreground);
+    box-shadow: var(--background);
+
+    border-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+
+
+/*     transition:
+        color 0.2s,
+        background-color 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s,
+        fill 0.2s,
+        stroke 0.2s; */
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--ring);
+    }
+
+    &:disabled,
+    &.is-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.btn--outline {
+    background: var(--foreground);
+    color: var(--background);
+    border-color: var(--foreground);
+    pointer-events: none;
+
+}
+
+/* 
+.btn--default {
+    height: 2.5rem; 
+    padding: 0.5rem 1rem; 
+}
+
+.btn--sm {
+    height: 2.25rem; 
+    padding: 0.5rem 0.75rem; 
+}
+
+.btn--lg {
+    height: 2.75rem; 
+    padding: 0 0.875rem; 
+}
+
+.btn--icon {
+    width: 2.5rem; 
+    height: 2.5rem; 
+    padding: 0;
+}
+
+.btn--clear {
+    padding: 0;
+    height: auto;
+    background: transparent;
+    border-color: transparent;
+}
+
+
+.btn--default {
+    background: var(--primary);
+    color: var(--primary-foreground);
+
+    &:hover {
+        background-color: hsl(var(--primary) / 0.9);
+    }
+
+    .btn--secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+
+        &:hover {
+            background-color: hsl(var(--secondary) / 0.8);
+        }
+    }
+
+    .btn--destructive {
+        background: var(--destructive);
+        color: var(--destructive-foreground);
+
+        &:hover {
+            background-color: hsl(var(--destructive) / 0.9);
+        }
+    }
+
+    .btn--outline {
+        background: var(--background);
+        color: var(--foreground);
+        border-color: var(--border);
+
+        &:hover {
+            background: var(--card);
+            color: var(--foreground);
+        }
+    }
+
+    .btn--ghost {
+        //background: transparent;
+        background-color: red;
+        color: var(--foreground);
+
+        &:hover {
+            background: var(--card);
+            color: var(--foreground);
+        }
+    }
+
+    .btn--link {
+        background: transparent;
+        color: var(--primary);
+        text-decoration: none;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-underline-offset: 4px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+} */
