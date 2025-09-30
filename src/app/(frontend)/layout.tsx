@@ -1,6 +1,9 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import type { Metadata } from 'next'
 import { AdminBar } from '@/components/AdminBar/AdminBar'
+import { InitTheme } from '@/providers/Theme/InitTheme'
+import { ThemeProvider } from '@/providers/Theme/ThemeProvider'
+import { Footer } from '@/components/Footer/Footer'
 import '@/styles/globals.scss'
 
 const geistSans = Geist({
@@ -25,9 +28,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      <head>
+        <InitTheme />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ThemeProvider>
         <AdminBar />
         {children}
+        <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

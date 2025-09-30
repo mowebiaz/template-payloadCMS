@@ -17,7 +17,7 @@ $shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
   background: $card-bg;
   border: 1px solid $card-border;
   border-radius: 0.75rem; // ~ rounded-lg
-  color: $text;
+  color: var(--card-foreground);
   transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   will-change: transform;
 

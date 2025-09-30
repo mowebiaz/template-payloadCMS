@@ -1,4 +1,4 @@
-import canUseDM from './canUseDM'
+import canUseDOM from './canUseDOM'
 
 export const getServerSideURL = () => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL
@@ -13,7 +13,7 @@ export const getServerSideURL = () => {
 }
 
 export const getClientSideURL = () => {
-  if (canUseDM) {
+  if (canUseDOM) {
     const { protocol, hostname, port } = window.location
     return `${protocol}//${hostname}${port ? `:${port}` : ''}`
   }
