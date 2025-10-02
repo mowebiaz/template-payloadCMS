@@ -14,7 +14,6 @@ import { articleSchema, imageSchema } from '@/components/Schema/Schema'
 import type { Media, Post } from '@/payload-types'
 import Script from 'next/script'
 import { Redirects } from '@/components/Redirects/Redirects'
-import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { RelatedPosts } from '@/components/RelatedPosts/RelatedPosts'
 
 export async function generateStaticParams() {
@@ -145,11 +144,13 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     overrideAccess: Boolean(user),
     draft: Boolean(user),
     limit: 1,
+    depth: 2,
     where: {
       slug: {
         equals: slug,
       },
     },
+    
   })
 
   return result.docs?.[0] || null

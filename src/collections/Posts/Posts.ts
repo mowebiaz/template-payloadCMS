@@ -39,11 +39,12 @@ export const Posts: CollectionConfig = {
       }
     },
   },
-  defaultPopulate: {
+/*   defaultPopulate: {
     title: true,
     slug: true,
     categories: true,
-  },
+    
+  }, */
   /* Pour versions futures
   trash: true,
    admin: {
@@ -258,6 +259,7 @@ export const Posts: CollectionConfig = {
               },
               hasMany: true,
               relationTo: 'posts',
+              maxDepth: 3,
             },
             {
               name: 'publishedAt',
