@@ -15,6 +15,7 @@ import type { Media, Post } from '@/payload-types'
 import Script from 'next/script'
 import { Redirects } from '@/components/Redirects/Redirects'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
+import { RelatedPosts } from '@/components/RelatedPosts/RelatedPosts'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -74,7 +75,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       >
         {JSON.stringify(schema)}
       </Script>
-      <div>
+      <article>
         {draft && <LivePreviewListener />}
 
         <h1>{post.title}</h1>
@@ -94,18 +95,31 @@ export default async function Post({ params: paramsPromise }: Args) {
 
         {post.content && <RichText data={post.content} />}
         {/* <RenderBlocks blocks={post.BlockTest} /> */}
-
         {/* {post.content && <GenerateHtml data={post.content} />} */}
+        {post.relatedPosts && post.relatedPosts.length > 0 && (
+          <section className="container">
+            <h2>Related posts</h2>
+
+            <RelatedPosts
+              docs={post.relatedPosts.filter(
+                (post) => typeof post === 'object',
+              )}
+            />
+          </section>
+        )}
 
         <p>Status: {post._status}</p>
+        <p>
+          posts liés:{' '}
+          {post.relatedPosts && post.relatedPosts.length > 0
+            ? post.relatedPosts.length
+            : 'none'}
+        </p>
         <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
         <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
         <p>Draft: {draft ? 'Yes' : 'No'}</p>
         <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
-
-
-
-      </div>
+      </article>
     </>
   )
 }
