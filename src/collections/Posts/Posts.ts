@@ -106,7 +106,7 @@ export const Posts: CollectionConfig = {
   versions: {
     drafts: {
       autosave: { interval: 100 },
-      //schedulePublish: true,
+      schedulePublish: true,
       //validate: false,
     },
     maxPerDoc: 100,

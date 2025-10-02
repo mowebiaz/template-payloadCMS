@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { buildConfig } from 'payload'
+import { buildConfig, PayloadRequest, TaskConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -17,6 +17,8 @@ import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
 import { Logos } from './globals/Logos'
 import { Categories } from './collections/Categories'
+import { time } from 'console'
+import { schedulePublish } from './utilities/jobs/schedulePublish'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -81,7 +83,7 @@ export default buildConfig({
           exportName: 'Header',
         },
       ],
-/*       graphics: {
+      /*       graphics: {
         Logo: {
           path: '@/components/Admin/ui/logo.tsx',
           exportName: 'Logo',
@@ -239,6 +241,83 @@ export default buildConfig({
       },
     }),
   ],
+  jobs: {
+    access: {
+      run: ({ req }: { req: PayloadRequest }) => {
+        if (req.user) return true
+        return (
+          `Bearer ${process.env.CRON_SECRET}` ===
+          req.headers.get('Authorization')
+        )
+      },
+    },
+    tasks: [
+      {
+        slug: 'healthCheck',
+        handler: async ({ req }) => {
+          const results = {
+            timestamp: new Date().toISOString(),
+            errors: [] as string[],
+            checks: {
+              database: false,
+              api: false,
+            },
+          }
+          try {
+            try {
+              await req.payload.find({
+                collection: 'users',
+                limit: 1,
+              })
+              results.checks.database = true
+            } catch (e) {
+              await req.payload.sendEmail({
+                to: process.env.EMAIL,
+                html: `Health check failed: ${e instanceof Error ? e.message : 'Unknown error'}`,
+              })
+              results.errors.push('Database check failed')
+            }
+            try {
+              const serverUrl =
+                process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+              const response = await fetch(`${serverUrl}/api/health`)
+              if (response.ok) {
+                results.checks.api = true
+              } else {
+                results.errors.push(
+                  `API health check return ${response.status}`,
+                )
+                await req.payload.sendEmail({
+                  to: process.env.EMAIL,
+                  html: `Health check failed: API returned status ${response.status}`,
+                })
+              }
+            } catch (e) {
+              results.errors.push('API check failed')
+            }
+            const allHealthy = Object.values(results.checks).every(
+              (check) => check,
+            )
+            if (!allHealthy) {
+              req.payload.logger.error('Health check failed')
+              await req.payload.sendEmail({
+                to: process.env.EMAIL,
+                html: `<h2>Health check failed</h2>`,
+              })
+            } else {
+              req.payload.logger.info('All systems healthy')
+            }
+            return { output: results }
+          } catch (e) {
+            req.payload.logger.error('Health check error')
+            throw e
+          }
+        },
+        retries: 1,
+      } as TaskConfig<'healthCheck'>,
+      schedulePublish as TaskConfig<'schedulePublish'>,
+    ],
+  },
 
   // To make documents created before enabling draft mode visible in the admin field
   /*   onInit: async (payload) => {
