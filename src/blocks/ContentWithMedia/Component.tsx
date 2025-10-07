@@ -7,7 +7,7 @@ export function ContentWithMediaBlock(block: ContentWithMedia) {
     return (
       <section>
         <div>{block.content && <RichText data={block.content} />}</div>
-        {block.imageBlock && typeof block.imageBlock !== 'string' &&
+        {block.imageBlock && typeof block.imageBlock === 'object' &&
         (
           <Image
             src={block.imageBlock.url || ''}
@@ -21,7 +21,7 @@ export function ContentWithMediaBlock(block: ContentWithMedia) {
   } else if (block.textPosition === 'Right') {
     return (
       <section>
-        {block.imageBlock && typeof block.imageBlock !== 'string' &&
+        {block.imageBlock && typeof block.imageBlock === 'object' &&
         (
           <Image
             src={block.imageBlock.url || ''}
