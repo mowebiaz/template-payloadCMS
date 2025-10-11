@@ -42,7 +42,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   return (
-    <>
+    <main>
       <h1>Posts</h1>
 
       <PageRange
@@ -54,7 +54,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <ArticleCardContainer posts={posts.docs} />
 
-      <div className="container">
+      <div>
         {posts?.page && posts?.totalPages > 1 && (
           <Pagination
             page={posts.page}
@@ -62,7 +62,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           />
         )}
       </div>
-    </>
+    </main>
   )
 }
 

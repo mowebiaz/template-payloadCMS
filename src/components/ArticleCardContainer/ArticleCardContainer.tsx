@@ -9,7 +9,7 @@ export const ArticleCardContainer: React.FC<Props> = (props) => {
   const { posts } = props
 
   return (
-    <div className='container'>
+    <div>
         <div className="posts">
           {posts?.map((result, index) => {
             if (typeof result === 'object' && result !== null) {

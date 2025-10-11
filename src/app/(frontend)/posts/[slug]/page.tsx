@@ -74,29 +74,32 @@ export default async function Post({ params: paramsPromise }: Args) {
       >
         {JSON.stringify(schema)}
       </Script>
-      <article>
+      <main>
         {draft && <LivePreviewListener />}
 
-        <h1>{post.title}</h1>
-        <p>Slug: {post.slug}</p>
-        {post.coverImage &&
-        typeof post.coverImage === 'object' &&
-        post.coverImage.url ? (
-          <Image
-            src={post.coverImage.url}
-            alt={post.coverImage.alt || 'Cover Image'}
-            width={600}
-            height={400}
-          />
-        ) : (
-          <p>No cover image available</p>
-        )}
+        <section>
+          <h1>{post.title}</h1>
 
-        {post.content && <RichText data={post.content} />}
-        {/* <RenderBlocks blocks={post.BlockTest} /> */}
-        {/* {post.content && <GenerateHtml data={post.content} />} */}
+          {post.coverImage &&
+          typeof post.coverImage === 'object' &&
+          post.coverImage.url ? (
+            <Image
+              src={post.coverImage.url}
+              alt={post.coverImage.alt || 'Cover Image'}
+              width={600}
+              height={400}
+            />
+          ) : (
+            <p>No cover image available</p>
+          )}
+
+          {post.content && <RichText data={post.content} />}
+          {/* <RenderBlocks blocks={post.BlockTest} /> */}
+          {/* {post.content && <GenerateHtml data={post.content} />} */}
+        </section>
+
         {post.relatedPosts && post.relatedPosts.length > 0 && (
-          <section className="container">
+          <section>
             <h2>Related posts</h2>
 
             <RelatedPosts
@@ -118,7 +121,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
         <p>Draft: {draft ? 'Yes' : 'No'}</p>
         <p>Draft Mode: {draft ? 'Enabled' : 'Disabled'}</p>
-      </article>
+      </main>
     </>
   )
 }
@@ -150,7 +153,6 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
         equals: slug,
       },
     },
-    
   })
 
   return result.docs?.[0] || null

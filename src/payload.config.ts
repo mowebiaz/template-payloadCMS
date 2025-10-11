@@ -17,7 +17,6 @@ import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
 import { Logos } from './globals/Logos'
 import { Categories } from './collections/Categories'
-import { time } from 'console'
 import { schedulePublish } from './utilities/jobs/schedulePublish'
 
 const filename = fileURLToPath(import.meta.url)

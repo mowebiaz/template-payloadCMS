@@ -4,6 +4,7 @@ import { AdminBar } from '@/components/AdminBar/AdminBar'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { ThemeProvider } from '@/providers/Theme/ThemeProvider'
 import { Footer } from '@/components/Footer/Footer'
+import Favicon from '@/components/Favicon/Favicon'
 import '@/styles/globals.scss'
 
 const geistSans = Geist({
@@ -33,9 +34,10 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider>
-        <AdminBar />
-        {children}
-        <Footer />
+           <Favicon />
+           <AdminBar /> 
+          {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

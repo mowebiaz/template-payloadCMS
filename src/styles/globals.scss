@@ -1,6 +1,15 @@
 @use './variables' as *;
 @use './mixins' as *;
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
 :root {
     --background: hsla(0, 0%, 100%, 1);
     --foreground: hsla(222.2, 84%, 4.9%, 1);
@@ -74,7 +83,7 @@
 html,
 body {
     max-width: 100vw;
-    height: 100vh;
+    height: 100%;
     overflow-x: hidden;
 }
 
@@ -88,10 +97,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
-    //max-width: 1280px;
+main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+        //max-width: 1280px;
     padding: 1rem;
-    margin: auto;
     @include md {
         padding: 2rem;
     }
@@ -99,18 +110,13 @@ body {
         padding: 2rem;
     }
     @include xl {
-        padding: 2rem;
+        padding: 3rem;
     }
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+/* .container {
+
+} */
 
 a {
     color: inherit;
@@ -133,13 +139,16 @@ blockquote {
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  position: absolute;
+  top: 0;        // optionnel, pour éviter un débordement
+  left: 0;       // optionnel
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;     // pas de marge négative
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%); // moderne
 }

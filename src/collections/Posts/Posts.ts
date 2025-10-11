@@ -45,6 +45,7 @@ export const Posts: CollectionConfig = {
     categories: true,
     
   }, */
+  
   /* Pour versions futures
   trash: true,
    admin: {

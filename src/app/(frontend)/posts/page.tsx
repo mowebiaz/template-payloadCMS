@@ -1,6 +1,5 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { format } from 'date-fns'
 import { headers as getHeaders } from 'next/headers'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
 import { PageRange } from '@/components/Pagination/PageRange'
@@ -15,7 +14,7 @@ export default async function Posts() {
     collection: 'posts',
     overrideAccess: Boolean(user),
     draft: Boolean(user),
-    depth:1,
+    depth: 1,
     limit: 5,
     select: {
       title: true,
@@ -30,18 +29,23 @@ export default async function Posts() {
   })
 
   return (
-    <>
+    <main>
       <h1>Tous les Posts</h1>
-      <PageRange collection="posts" currentPage={posts.page} limit={posts.limit} totalDocs={posts.totalDocs} />
+      <PageRange
+        collection="posts"
+        currentPage={posts.page}
+        limit={posts.limit}
+        totalDocs={posts.totalDocs}
+      />
       <ArticleCardContainer posts={posts.docs} />
       {posts.totalPages > 1 && posts.page && (
-        <Pagination page={posts.page} totalPages={posts.totalPages } />
+        <Pagination
+          page={posts.page}
+          totalPages={posts.totalPages}
+        />
       )}
 
-
-
-      <br />
-      <p>Nombre de posts: {posts.totalDocs}</p>
+ {/*      <p>Nombre de posts: {posts.totalDocs}</p>
       <p>Page actuelle: {posts.page}</p>
       <p>Nombre de pages: {posts.totalPages}</p>
       <p>Nombre de posts par page: {posts.limit}</p>
@@ -126,7 +130,7 @@ export default async function Posts() {
       <p>
         Nombre de posts sans tags:{' '}
         {posts.docs.length - posts.docs.filter((post) => post.tags).length}
-      </p>
-    </>
+      </p> */}
+    </main>
   )
 }
