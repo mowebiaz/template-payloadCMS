@@ -42,6 +42,7 @@ import { Outro as Outro_f85720e69ac9bc2a5e3ee1e919825e22 } from '@/components/Ad
 import { LoginInstruction as LoginInstruction_b7867967b91dbf7d5a30e5848bd2d55c } from '@/components/Admin/ui/afterLogin.tsx'
 import { Welcome as Welcome_fdae91cc357a05f8fe0bfc660eabd8ba } from '@/components/Admin/ui/beforeDashboard.tsx'
 import { LinkToHome as LinkToHome_e382423eb089a75a84a100230738ad6a } from '@/components/Admin/ui/beforeLogin.tsx'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
 export const importMap = {
   "src/components/Admin/Fields/slug/SlugComponent#SlugComponent": SlugComponent_87bd6d03759ea917eac9ad9783d68ef0,
@@ -87,5 +88,6 @@ export const importMap = {
   "@/components/Admin/ui/afterDashboard.tsx#Outro": Outro_f85720e69ac9bc2a5e3ee1e919825e22,
   "@/components/Admin/ui/afterLogin.tsx#LoginInstruction": LoginInstruction_b7867967b91dbf7d5a30e5848bd2d55c,
   "@/components/Admin/ui/beforeDashboard.tsx#Welcome": Welcome_fdae91cc357a05f8fe0bfc660eabd8ba,
-  "@/components/Admin/ui/beforeLogin.tsx#LinkToHome": LinkToHome_e382423eb089a75a84a100230738ad6a
+  "@/components/Admin/ui/beforeLogin.tsx#LinkToHome": LinkToHome_e382423eb089a75a84a100230738ad6a,
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }

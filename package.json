@@ -7,11 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "dev:prod": "rm -rf .next && npm build && npm start",
     "lint": "next lint",
-    "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload"
+    "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
+    "ci": "payload migrate && npm build"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.46.0",
+    "@payloadcms/db-vercel-postgres": "^3.59.1",
     "@payloadcms/email-resend": "^3.46.0",
     "@payloadcms/live-preview-react": "^3.46.0",
     "@payloadcms/next": "^3.46.0",
@@ -19,6 +22,7 @@
     "@payloadcms/plugin-search": "^3.46.0",
     "@payloadcms/plugin-seo": "^3.46.0",
     "@payloadcms/richtext-lexical": "^3.46.0",
+    "@payloadcms/storage-vercel-blob": "^3.59.1",
     "@payloadcms/translations": "^3.47.0",
     "@payloadcms/ui": "^3.46.0",
     "@radix-ui/react-select": "^2.2.6",

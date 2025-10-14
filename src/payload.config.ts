@@ -1,6 +1,6 @@
 import sharp from 'sharp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { buildConfig, PayloadRequest, TaskConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
@@ -12,12 +12,13 @@ import { fr } from '@payloadcms/translations/languages/fr'
 import { Media } from './collections/Media'
 import { Users } from './collections/Users/config'
 import { Posts } from './collections/Posts/Posts'
+import { Categories } from './collections/Categories'
+import { Logos } from './globals/Logos'
 import { beforeSyncWithSearch } from './components/Search/beforeSync'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
-import { Logos } from './globals/Logos'
-import { Categories } from './collections/Categories'
 import { schedulePublish } from './utilities/jobs/schedulePublish'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -97,6 +98,7 @@ export default buildConfig({
       titleSuffix: ' - Mon application Payload',
       title: 'blanck payload',
       description: 'this is exemple for educational purpose only',
+      // Admin panel favicon
       icons: [
         {
           url: '/logo3_sombre.svg',
@@ -115,10 +117,10 @@ export default buildConfig({
         },
       ],
     },
-    /*importMap: {
+    importMap: {
       baseDir: path.resolve(dirname),
     },
-    user: Users.slug,*/
+    user: Users.slug,
   },
 
   // Internationalization configuration
@@ -126,6 +128,26 @@ export default buildConfig({
     fallbackLanguage: 'en',
     supportedLanguages: { fr, en },
   },
+
+  /*   localization: {
+    defaultLocale: 'fr',
+    locales: [
+      {
+        code: 'fr',
+        label: 'Français',
+      },
+      {
+        code: 'en',
+        label: 'English',
+        fallbackLocale: 'fr',
+      },
+    ],
+    fallback: true,
+    defaultLocalePublishOption: 'active',
+/*     filterAvailableLocales: ({ req, locales }) => {
+      return locales.filter((locale) => locale.code !== 'fr')
+    }, 
+  }, */
 
   // If you'd like to use Rich Text, pass your editor here
   editor: lexicalEditor(),
@@ -141,9 +163,9 @@ export default buildConfig({
   },
 
   // Whichever Database Adapter you're using should go here
-  db: postgresAdapter({
+  db: vercelPostgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URL || '',
     },
   }),
 
@@ -177,6 +199,17 @@ export default buildConfig({
   },
 
   plugins: [
+    vercelBlobStorage({
+      enabled: true, // Optional, defaults to true
+      // Specify which collections should use Vercel Blob
+      collections: {
+        media: true,
+      },
+      // Token provided by Vercel once Blob storage is added to your Vercel project
+      token: process.env.BLOB_READ_WRITE_TOKEN || '',
+      clientUploads: true,
+    }),
+
     seoPlugin({
       /*     collections: ['posts'],
     uploadsCollection: 'media', */
