@@ -47,7 +47,7 @@ const PaginationLink = ({
   <Button
     aria-current={isActive ? 'page' : undefined}
     variant={isActive ? 'outline' : 'ghost'}
-    className={['pagination__link', (props as any).className]
+    className={['pagination__link', (props).className]
       .filter(Boolean)
       .join(' ')}
     {...props}
@@ -61,7 +61,7 @@ const PaginationPrevious = ({
     aria-label="Go to previous page"
     className={[
       'pagination__link--prev',
-      (props as any).className,
+      (props).className,
     ]
       .filter(Boolean)
       .join(' ')}
@@ -79,7 +79,7 @@ const PaginationNext = ({
     aria-label="Go to next page"
     className={[
       'pagination__link--next',
-      (props as any).className,
+      (props).className,
     ]
       .filter(Boolean)
       .join(' ')}
@@ -95,7 +95,7 @@ const PaginationEllipsis = ({
 }: React.ComponentProps<'span'>) => (
   <span
     aria-hidden
-    className={['pagination__ellipsis', (props as any).className].filter(Boolean).join(' ')}
+    className={['pagination__ellipsis', (props).className].filter(Boolean).join(' ')}
     {...props}
   >
     <FaEllipsis />

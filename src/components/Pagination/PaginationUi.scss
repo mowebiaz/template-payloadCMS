@@ -4,66 +4,63 @@
    icons: h-4 w-4
 */
 
-$gap-1: 0.25rem;   // Tailwind gap-1
-$icon: 1rem;       // h-4 w-4
-$h9: 2.25rem;      // h-9 w-9 (ellipsis)
+$gap-1: 0.25rem; // Tailwind gap-1
+$icon: 1rem; // h-4 w-4
+$h9: 2.25rem; // h-9 w-9 (ellipsis)
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .pagination__content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: $gap-1;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $gap-1;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .pagination__item {
-  display: contents;
-}
-
-/* Le rendu visuel du bouton (ghost/outline, tailles) vient de ton Button.scss.
-   Ici on gère uniquement l’habillage “pagination”. */
-.pagination__link {
-  /* rien d'obligatoire ici, le style vient de Button */
+    display: contents;
 }
 
 /* "Previous" / "Next" avec libellé
    - gap-1 pour l’espace texte/icone
    - padding latéral comme pl-2.5 / pr-2.5 (= 0.625rem) */
 .pagination__link--with-label {
-  gap: $gap-1;
+    gap: $gap-1;
 
-  .pagination__icon {
-    width: $icon;
-    height: $icon;
-  }
+    .pagination__icon {
+        width: $icon;
+        height: $icon;
+    }
 }
 
-.pagination__link--prev { padding-left: 0.625rem; }
-.pagination__link--next { padding-right: 0.625rem; }
+.pagination__link--prev {
+    padding-left: 0.625rem;
+}
+.pagination__link--next {
+    padding-right: 0.625rem;
+}
 
 /* Ellipsis: flex center + taille 2.25rem */
 .pagination__ellipsis {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: $h9;
-  height: $h9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $h9;
+    height: $h9;
 }
 
 /* Icône générique (Chevron/Ellipsis) */
 .pagination__icon {
-  display: inline-block;
-  width: $icon;
-  height: $icon;
+    display: inline-block;
+    width: $icon;
+    height: $icon;
 }
-

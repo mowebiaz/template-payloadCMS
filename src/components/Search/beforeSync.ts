@@ -45,7 +45,7 @@ export const beforeSyncWithSearch: BeforeSync = async ({
   }
 
   const plaintext = convertLexicalToPlaintext({
-    //@ts-expect-error
+    // @ts-expect-error: converters type is not compatible with expected argument, but usage is safe here
     converters,
     data,
   })

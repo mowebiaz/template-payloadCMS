@@ -19,23 +19,28 @@ export const articleSchema = (props: Post) => {
   }
 }
 
-export const imageSchema = (media: Media): Record<string, any> => {
-  const schema: Record<string, any> = {
+interface JsonLdImageObject {
+  '@context': 'https://schema.org'
+  '@type': 'ImageObject'
+  contentUrl?: string
+  creditText?: string
+  creator?: {
+    '@type': 'Person'
+    name: string
+  }
+}
+
+type MediaForSchema = Pick<Media, 'creditText' | 'photographe' | 'filename'>
+
+export const imageSchema = (media: MediaForSchema): JsonLdImageObject => {
+  return {
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
     //'contentUrl': `${monchemindeblob}/${image?.filename}`,
+    ...(media.creditText && { creditText: media.creditText }),
+    ...(media.photographe && {
+      creator: { '@type': 'Person', name: media.photographe },
+    }),
+    // ...(media.filename && { contentUrl: `${BLOB_BASE}/${media.filename}` }),
   }
-
-  if (media.creditText) {
-    schema.creditText = media.creditText
-  }
-
-  if (media.photographe) {
-    schema.creator = {
-      '@type': 'Person',
-      name: media.photographe,
-    }
-  }
-
-  return schema
 }

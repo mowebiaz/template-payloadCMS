@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useTheme } from '../ThemeProvider'
 import type { Theme } from '../constants'
-import { THEME_LS_KEY } from '../constants'
 import './ThemeSelector.scss'
 
 export const ThemeSelector: React.FC = () => {
