@@ -1,28 +1,20 @@
-import type { CollectionSlug, PayloadRequest } from 'payload'
+import type { CollectionSlug } from 'payload'
 import { getPayload } from 'payload'
 
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import configPromise from '@payload-config'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(
-  req: {
-    cookies: {
-      get: (name: string) => {
-        value: string
-      }
-    }
-  } & Request,
-): Promise<Response> {
+export async function GET(request: NextRequest) {
   const payload = await getPayload({ config: configPromise })
 
-  const { searchParams } = new URL(req.url)
-
-  const path = searchParams.get('path')
-  const collection = searchParams.get('collection') as CollectionSlug
-  const slug = searchParams.get('slug')
-  const previewSecret = searchParams.get('previewSecret')
+  const url = new URL(request.url)
+  const path = url.searchParams.get('path')
+  const collection = url.searchParams.get('collection') as CollectionSlug | null
+  const slug = url.searchParams.get('slug')
+  const previewSecret = url.searchParams.get('previewSecret')
 
   if (previewSecret !== process.env.PREVIEW_SECRET) {
     return new Response('You are not allowed to preview this page', {
@@ -44,16 +36,13 @@ export async function GET(
   let user
 
   try {
-    user = await payload.auth({
-      req: req as unknown as PayloadRequest,
-      headers: req.headers,
-    })
+    user = await payload.auth({ headers: request.headers })
   } catch (error) {
     payload.logger.error(
       { err: error },
       'Error verifying token for live preview',
     )
-    return new Response('You are not allowed to preview this page', {
+    return new NextResponse('You are not allowed to preview this page', {
       status: 403,
     })
   }
@@ -62,7 +51,7 @@ export async function GET(
 
   if (!user) {
     draft.disable()
-    return new Response('You are not allowed to preview this page', {
+    return new NextResponse('You are not allowed to preview this page', {
       status: 403,
     })
   }
