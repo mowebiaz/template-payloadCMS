@@ -1,7 +1,7 @@
 import type { Media, User } from '@/payload-types'
 import Image from 'next/image'
 
-export const Avatar = ({ user }: { user: User }) => {
+const Avatar = ({ user }: { user: User }) => {
   const avatar = user?.avatar as Media
 
   return (
