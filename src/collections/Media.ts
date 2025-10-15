@@ -58,7 +58,40 @@ export const Media: CollectionConfig = {
 
     // from payload v3.51.0
     //imageSizes: [{ name: 'small', fit: 'cover', width: 400, height: 400 }],
-    //adminThumbnail: 'small',
+    adminThumbnail: 'thumbnail',
     //adminThumbnail: ({doc}) : string => `https://google.com/path/to/file/${doc.filename}`,
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 300,
+      },
+      {
+        name: 'square',
+        width: 500,
+        height: 500,
+      },
+      {
+        name: 'small',
+        width: 600,
+      },
+      {
+        name: 'medium',
+        width: 900,
+      },
+      {
+        name: 'large',
+        width: 1400,
+      },
+      {
+        name: 'xlarge',
+        width: 1920,
+      },
+      {
+        name: 'og',
+        width: 1200,
+        height: 630,
+        crop: 'center',
+      },
+    ],
   },
 }

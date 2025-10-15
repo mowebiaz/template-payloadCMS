@@ -12,14 +12,14 @@ export const Logo = async ({payload}: {payload: Payload}) => {
 
   return <>
     <Image
-      src={`${moncheminblob}/${lightModeLogo.filename}`}
+      src={lightModeLogo.url || `/logo3_sombre.svg`}
       alt={lightModeLogo.alt}
       width={lightModeLogo.width!}
       height={lightModeLogo.height!}
       className={'lightMode'}
     />
     <Image
-      src={`${moncheminblob}/${darkModeLogo.filename}`}
+      src={darkModeLogo.url || `/logo3_vert.svg`}
       alt={darkModeLogo.alt}
       width={darkModeLogo.width!}
       height={darkModeLogo.height!}

@@ -17,45 +17,49 @@ export const beforeSyncWithSearch: BeforeSync = async ({
   const {
     doc: { relationTo: collection },
   } = searchDoc
-  const { title, content, slug } = originalDoc
+  const { title, content, slug } = originalDoc as {
+    title: string
+    content: SerializedEditorState
+    slug: string
+  }
 
   // if many fields named "content"
   // make a switch statement as it grows in complexity
   const pageText: string[] = []
 
-  if (collection === 'pages') {
-    const { content: pageBlocks } = originalDoc as Page
-    pageBlocks?.forEach((block) => {
-      if (block.blockType === 'contentWithMedia' && block.content) {
-        pageText.push(convertLexicalToPlaintext({ data: block.content }))
-      }
-    })
-  }
+  const data: SerializedEditorState | null = content ?? null
 
-  const data: SerializedEditorState = content
-
-  const converters: PlaintextConverter<
-    DefaultNodeTypes | SerializedBlockNode<ContentWithMedia>
-  > = {
+  const converters = {
     blocks: {
-      contentWithMedia: ({ node }) => {
-        return convertLexicalToPlaintext({ data: node.fields.content! })
+      contentWithMedia: ({
+        node,
+      }: {
+        node: { fields?: { content?: SerializedEditorState | null } }
+      }) => {
+        const inner = node?.fields?.content
+        return inner ? convertLexicalToPlaintext({ data: inner }) : ''
       },
     },
   }
 
-  const plaintext = convertLexicalToPlaintext({
-    // @ts-expect-error: converters type is not compatible with expected argument, but usage is safe here
-    converters,
-    data,
-  })
+  const plaintext = data
+    ? convertLexicalToPlaintext({
+        // @ts-expect-error: converters type is not compatible but required for custom block handling
+        converters,
+        data,
+      })
+    : ''
 
   const modifiedDoc: DocToSync = {
     ...searchDoc,
     title,
     slug,
-    excerpt: collection === 'posts' ? plaintext: collection === 'pages' ? pageText.join(' ') : '',
-
+    excerpt:
+      collection === 'posts'
+        ? plaintext
+        : collection === 'pages'
+          ? pageText.join(' ')
+          : '',
   }
 
   return modifiedDoc

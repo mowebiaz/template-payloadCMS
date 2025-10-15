@@ -8,8 +8,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   let url = serverUrl + '/logo3_sombre.svg'
 
   if (image && typeof image === 'object' && 'url' in image) {
-    // poru définir la taille de l'image og
-    const ogURL = image.sizes?.small?.url
+    const ogURL = image.sizes?.og?.url
     url = ogURL ? serverUrl + ogURL : serverUrl + image.url
   }
 

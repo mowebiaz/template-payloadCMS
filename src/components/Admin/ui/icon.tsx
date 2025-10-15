@@ -12,14 +12,15 @@ export const Icon = async ({payload}: {payload: Payload}) => {
 
   return <>
     <Image
-      src={`${moncheminblob}/${lightModeIcon.filename}`}
+      //src={`${moncheminblob}/${lightModeIcon.filename}`}
+      src={lightModeIcon.url || '/logo3_sombre.svg'}
       alt={lightModeIcon.alt}
       width={lightModeIcon.width!}
       height={lightModeIcon.height!}
       className={'lightMode'}
     />
     <Image
-      src={`${moncheminblob}/${darkModeIcon.filename}`}
+      src={darkModeIcon.url || '/logo3_vert.svg'}
       alt={darkModeIcon.alt}
       width={darkModeIcon.width!}
       height={darkModeIcon.height!}

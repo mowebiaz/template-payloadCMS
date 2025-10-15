@@ -93,8 +93,6 @@ export default async function Post({ params: paramsPromise }: Args) {
           )}
 
           {post.content && <RichText data={post.content} />}
-          {/* <RenderBlocks blocks={post.BlockTest} /> */}
-          {/* {post.content && <GenerateHtml data={post.content} />} */}
         </section>
 
         {post.relatedPosts && post.relatedPosts.length > 0 && (

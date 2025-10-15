@@ -13,25 +13,28 @@ export const Redirects: React.FC<Props> = async ({ disableNotFound, url }) => {
   const redirectItem = redirects.find((redirect) => redirect.from === url)
 
   if (redirectItem) {
+    // 1) URL directe
     if (redirectItem.to?.url) {
       redirect(redirectItem.to.url)
     }
 
-    let redirectUrl: string
+    // 2) Référence (id ou objet peuplé)
+    let redirectUrl: string | undefined
+    const ref = redirectItem.to?.reference
 
-    if (typeof redirectItem.to?.reference?.value === 'string') {
-      const collection = redirectItem.to?.reference?.relationTo
-      const id = redirectItem.to?.reference?.value
+    if (ref) {
+      const collection = ref.relationTo 
 
-      const document = (await getCachedDocument(collection, id)()) as Post
-
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : `${document.slug}`}`
-    } else {
-      redirectUrl = `${
-        redirectItem.to?.reference?.relationTo !== 'pages'
-          ? `/${redirectItem.to?.reference?.relationTo}`
-          : ''
-      }/${typeof redirectItem.to?.reference?.value === 'object' ? redirectItem.to?.reference?.value?.slug : ''}`
+      if (typeof ref.value === 'string') {
+        // value = id → on va chercher le doc pour récupérer le slug
+        const document = (await getCachedDocument(collection, ref.value)()) as Post | { slug?: string } | null
+        const slug = document?.slug
+        redirectUrl = `/${collection}${slug ? `/${slug}` : ''}`
+      } else if (ref.value && typeof ref.value === 'object') {
+        // value = objet peuplé → slug disponible
+        const slug = (ref.value as { slug?: string })?.slug
+        redirectUrl = `/${collection}${slug ? `/${slug}` : ''}`
+      }
     }
 
     if (redirectUrl) redirect(redirectUrl)
