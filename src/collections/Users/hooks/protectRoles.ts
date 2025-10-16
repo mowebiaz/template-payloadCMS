@@ -11,6 +11,7 @@ export const protectRoles: FieldHook<{ id: string } & User> = async ({
   if (isFirstUser) {
     const roles = new Set(data?.roles || [])
     roles.add('admin')
+    roles.add('user')
     return [...roles]
   }
 

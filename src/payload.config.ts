@@ -19,6 +19,7 @@ import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
 import { schedulePublish } from './utilities/jobs/schedulePublish'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -169,8 +170,11 @@ export default buildConfig({
     },
   }),
 
-  cors: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''],
-  csrf: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''],
+/*   cors: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''],
+  csrf: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''], */
+
+  cors: [getServerSideURL()].filter(Boolean),
+  csrf: [getServerSideURL()].filter(Boolean),
 
   upload: {
     //whatever I upload across my entire payload projet to 5 million bytes
