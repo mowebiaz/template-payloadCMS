@@ -45,6 +45,7 @@ export const Users: CollectionConfig = {
           value: 'user',
         },
       ],
+      validate: (val) => Array.isArray(val) && val.every(Boolean) ? true : 'Invalid roles',
       hooks: {
         beforeChange: [protectRoles],
       },
