@@ -24,6 +24,10 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const isPreview = process.env.VERCEL_ENV === 'preview'
+const PREVIEW_URL = isPreview && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined
+
+
 export default buildConfig({
   admin: {
     //avatar: 'default',
@@ -170,11 +174,15 @@ export default buildConfig({
     },
   }),
 
-/*   cors: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''],
-  csrf: ['http://localhost:3000', process.env.NEXT_PUBLIC_URL || ''], */
+  cors: [getServerSideURL(), PREVIEW_URL || ''].filter(Boolean),
+  csrf: [getServerSideURL(), PREVIEW_URL || ''].filter(Boolean),
 
-  cors: [getServerSideURL()].filter(Boolean),
-  csrf: [getServerSideURL()].filter(Boolean),
+  /*auth: {
+    cookies: {
+      secure: true,
+      sameSite: 'lax',
+      // Surtout PAS de `domain` en preview ! (laisse undefined)
+    },*/
 
   upload: {
     //whatever I upload across my entire payload projet to 5 million bytes
