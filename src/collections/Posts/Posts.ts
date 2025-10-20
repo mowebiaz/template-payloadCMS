@@ -47,10 +47,11 @@ export const Posts: CollectionConfig = {
   }, */
   
   /* Pour versions futures
-  trash: true,
    admin: {
     groupBy: true,
   }, */
+
+  trash: true,
   labels: {
     singular: 'Article',
     plural: 'Articles',
