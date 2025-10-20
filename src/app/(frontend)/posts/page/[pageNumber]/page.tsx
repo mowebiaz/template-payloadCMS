@@ -29,9 +29,10 @@ export default async function Page({ params: paramsPromise }: Args) {
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: 5,
+    limit: 6,
     page: sanitizedPageNumber,
     overrideAccess: Boolean(user),
+    draft: Boolean(user),
   })
 
   if (posts.totalPages > 0 && sanitizedPageNumber > posts.totalPages) {

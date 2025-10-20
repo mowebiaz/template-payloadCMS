@@ -15,7 +15,7 @@ export default async function Posts() {
     overrideAccess: Boolean(user),
     draft: Boolean(user),
     depth: 1,
-    limit: 5,
+    limit: 6,
     select: {
       title: true,
       slug: true,
