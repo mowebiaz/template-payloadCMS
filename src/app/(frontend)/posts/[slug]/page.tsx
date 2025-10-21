@@ -114,6 +114,7 @@ export default async function Post({ params: paramsPromise }: Args) {
             ? post.relatedPosts.length
             : 'none'}
         </p>
+        <p>n° d&apos;id: {post.id}</p>
         <p>Crée le: {format(new Date(post.createdAt), 'dd/MM/yyyy')}</p>
         <p>Updated at: {format(new Date(post.updatedAt), 'dd/MM/yyyy')}</p>
         <p>Draft: {draft ? 'Yes' : 'No'}</p>

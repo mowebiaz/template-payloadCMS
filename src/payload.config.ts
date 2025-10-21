@@ -1,5 +1,4 @@
 import sharp from 'sharp'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { buildConfig, PayloadRequest, TaskConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -20,6 +19,7 @@ import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
 import { schedulePublish } from './utilities/jobs/schedulePublish'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { getServerSideURL } from './utilities/getURL'
+import { defaultLexical } from './components/RichText/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -155,7 +155,7 @@ export default buildConfig({
   }, */
 
   // If you'd like to use Rich Text, pass your editor here
-  editor: lexicalEditor(),
+  editor: defaultLexical,
 
   // Define and configure your collections in this array
   collections: [Posts, Media, Users, Categories],

@@ -3,9 +3,6 @@ import {
   BlocksFeature,
   FixedToolbarFeature,
   lexicalEditor,
-  TextStateFeature,
-  defaultColors,
-  HeadingFeature,
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import editor from '../Users/access/editor'
@@ -39,16 +36,11 @@ export const Posts: CollectionConfig = {
       }
     },
   },
-/*   defaultPopulate: {
+  /*   defaultPopulate: {
     title: true,
     slug: true,
     categories: true,
     
-  }, */
-  
-  /* Pour versions futures
-   admin: {
-    groupBy: true,
   }, */
 
   trash: true,
@@ -59,6 +51,7 @@ export const Posts: CollectionConfig = {
 
   admin: {
     //group: 'posts',
+    groupBy: true,
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
@@ -170,16 +163,9 @@ export const Posts: CollectionConfig = {
                   //hideInsertParagraphAtEnd: true,
                   placeholder: 'Ecrivez votre article ici...',
                 },
-                features: ({ defaultFeatures }) => [
-                  //...defaultFeatures,
+                features: ({ rootFeatures }) => [
+                  ...rootFeatures,
 
-                  ...defaultFeatures.filter(
-                    (feature) =>
-                      !['inlineCode', 'heading'].includes(feature.key),
-                  ),
-                  HeadingFeature({
-                    enabledHeadingSizes: ['h2', 'h3', 'h4', 'h5', 'h6'],
-                  }),
                   FixedToolbarFeature({
                     customGroups: {
                       blocks: {
@@ -196,45 +182,15 @@ export const Posts: CollectionConfig = {
                   BlocksFeature({
                     blocks: [ContentWithMedia, TableOfContent],
                   }),
-                  TextStateFeature({
-                    state: {
-                      color: {
-                        ...defaultColors.text,
-                        black: {
-                          label: 'Black',
-                          css: {
-                            color: '#000000',
-                          },
-                        },
-                      },
-                      background: {
-                        ...defaultColors.background,
-                        greenmw: {
-                          label: 'Green - MW',
-                          css: {
-                            'background-color': '#00ECAE',
-                          },
-                        },
-                      },
-                      size: {
-                        large: {
-                          label: 'Large text',
-                          css: {
-                            'font-size': 'large',
-                          },
-                        },
-                      },
-                      underline: {
-                        dashed: {
-                          label: 'Dashed',
-                          css: {
-                            'text-decoration': 'underline dashed',
-                          },
-                        },
-                      },
-                    },
-                  }),
                 ],
+
+                /*features: ({ rootFeatures }) => {
+                  console.log(
+                    'FEATURE KEYS:',
+                    rootFeatures.map((f) => f.key),
+                  )
+                  return rootFeatures
+                }, */
               }),
             },
           ],

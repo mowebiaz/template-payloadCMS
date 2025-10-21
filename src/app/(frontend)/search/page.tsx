@@ -17,7 +17,7 @@ export default async function SearchPage({
   const posts = await payload.find({
     collection: 'search-results',
     depth: 1,
-    limit: 6,
+    limit: 10,
     select: {
       title: true,
       slug: true,
