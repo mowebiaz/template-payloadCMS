@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 import { headers as getHeaders } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
+import { postPerPage } from '../../page'
 
 export const revalidate = 600
 
@@ -29,7 +30,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
-    limit: 6,
+    limit: postPerPage,
     page: sanitizedPageNumber,
     overrideAccess: Boolean(user),
     draft: Boolean(user),
@@ -83,7 +84,7 @@ export async function generateStaticParams() {
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
+  const totalPages = Math.ceil(totalDocs / postPerPage)
 
   const pages: { pageNumber: string }[] = []
 

@@ -1,17 +1,23 @@
 'use client'
 
-import { useDebounce } from '@/utilities/useDebounce'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export const Search: React.FC = () => {
-  const [value, setValue] = useState('')
-  const router = useRouter()
-  const debouncedValue = useDebounce(value)
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
 
-  useEffect(() => {
-    router.push(`/search${debouncedValue ? `?q=${debouncedValue}` : ''}`)
-  }, [debouncedValue, router])
+  const handleSearch = useDebouncedCallback((term) => {
+    const params = new URLSearchParams(searchParams)
+    params.set('page', '1') // reset to first page on new search
+    if (term) {
+      params.set('query', term)
+    } else {
+      params.delete('query')
+    }
+    replace(`${pathname}?${params.toString()}`)
+  }, 300)
 
   return (
     <form
@@ -26,9 +32,13 @@ export const Search: React.FC = () => {
         Search
       </label>
       <input
+        type="search"
         id="search"
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => {
+          handleSearch(e.target.value)
+        }}
         placeholder="Search..."
+        defaultValue={searchParams.get('query')?.toString()}
       />
       <button
         type="submit"

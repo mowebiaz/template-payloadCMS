@@ -4,27 +4,30 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
 import { CardPostData } from '@/components/ArticleCard/ArticleCard'
+import { PageRange } from '@/components/Pagination/PageRange'
+import { Pagination } from '@/components/Pagination/Pagination'
+import { SearchPagination } from '@/components/Pagination/SearchPagination'
 
-type Args = {
-  searchParams: Promise<{ q: string }>
-}
+export default async function SearchPage(props: {
+  searchParams?: Promise<{ query?: string; page?: string }>
+}) {
+  const searchParams = await props.searchParams
+  const query = searchParams?.query || ''
+  const currentPage = Number(searchParams?.page) || 1
 
-export default async function SearchPage({
-  searchParams: searchParamsPromise,
-}: Args) {
-  const { q: query } = await searchParamsPromise
   const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
+  const searchResults = await payload.find({
     collection: 'search-results',
     depth: 1,
-    limit: 10,
+    limit: 6,
+    page: currentPage,
+    pagination: true, // access to page, totalPages...
     select: {
       title: true,
       slug: true,
       excerpt: true,
       doc: true,
     },
-    pagination: false,
     ...(query
       ? {
           where: {
@@ -39,23 +42,27 @@ export default async function SearchPage({
   })
 
   return (
-    <div>
-      <div>
-        <div>
-          <h1>Search</h1>
-          <div>
-            <Search />
-          </div>
-        </div>
-      </div>
-      <div>
-        {posts.totalDocs > 0 ? (
-          <ArticleCardContainer posts={posts.docs as CardPostData[]} />
-        ) : (
-          <div>No result found</div>
-        )}
-      </div>
-    </div>
+    <main>
+      <h1>Search</h1>
+      <Search />
+      {query && <h2>Résultats pour &quot;{query}&quot;</h2>}
+      <PageRange
+        collection="posts"
+        limit={searchResults.limit}
+        currentPage={searchResults.page}
+        totalDocs={searchResults.totalDocs}
+      />
+      {searchResults.totalDocs > 0 ? (
+        <ArticleCardContainer posts={searchResults.docs as CardPostData[]} />
+      ) : (
+        <div>No result found</div>
+      )}
+      {searchResults.totalPages > 1 && searchResults.page && (
+        <SearchPagination
+          totalPages={searchResults.totalPages}
+        />
+      )}
+    </main>
   )
 }
 

@@ -1,0 +1,39 @@
+.pagination__item {
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        white-space: nowrap;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25rem;
+        border-radius: 0.25rem;
+
+        height: 2.5rem;
+        padding: 0.5rem 1rem;
+
+        background: transparent;
+        color: var(--foreground);
+        box-shadow: var(--background);
+
+        border-color: transparent;
+        border-width: 1px;
+        border-style: solid;
+
+        &.isDisabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        &.isCurrent {
+            background: var(--foreground);
+            color: var(--background);
+            border-color: var(--foreground);
+            pointer-events: none;
+        }
+    }
+}
+

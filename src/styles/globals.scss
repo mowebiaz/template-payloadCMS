@@ -101,7 +101,7 @@ main {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-        //max-width: 1280px;
+    //max-width: 1280px;
     padding: 1rem;
     @include md {
         padding: 2rem;
@@ -121,6 +121,7 @@ main {
 a {
     color: inherit;
     text-decoration: none;
+    transition: color 0.2s ease-in-out;
 }
 
 hr {
@@ -144,16 +145,16 @@ blockquote {
 }
 
 .sr-only {
-  position: absolute;
-  top: 0;        // optionnel, pour éviter un débordement
-  left: 0;       // optionnel
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: 0;     // pas de marge négative
-  overflow: hidden;
-  white-space: nowrap;
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  clip-path: inset(50%); // moderne
+    position: absolute;
+    top: 0; // optionnel, pour éviter un débordement
+    left: 0; // optionnel
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0; // pas de marge négative
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%); // moderne
 }
