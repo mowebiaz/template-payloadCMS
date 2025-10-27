@@ -1,13 +1,3 @@
-import { generatePreviewPath } from '@/utilities/generatePreviewPath'
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-import type { CollectionConfig } from 'payload'
-import editor from '../Users/access/editor'
-import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
-import { TableOfContent } from '@/blocks/TableOfContent/config'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -15,10 +5,20 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
+import type { CollectionConfig } from 'payload'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
+import { TableOfContent } from '@/blocks/TableOfContent/config'
+import { slugField } from '@/components/Admin/Fields/slug/slugField'
+import { CustomBlockIcon } from '@/components/RichText/CustomBlockIcon'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import editor from '../Users/access/editor'
 //import { afterErrorHook } from './hooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-import { CustomBlockIcon } from '@/components/RichText/CustomBlockIcon'
-import { slugField } from '@/components/Admin/Fields/slug/slugField'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -53,14 +53,12 @@ export const Posts: CollectionConfig = {
     //group: 'posts',
     groupBy: true,
     livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
+      url: ({ data, req }) =>
+        generatePreviewPath({
+          slug: data?.slug,
           collection: 'posts',
           req,
-        })
-        return path
-      },
+        }),
     },
     useAsTitle: 'title',
     preview: (data, { req }) =>
