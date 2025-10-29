@@ -1,10 +1,9 @@
 'use client'
 
-import { usePathname, useSearchParams } from 'next/navigation'
-
-import Link from 'next/link'
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
 import { FaEllipsis } from 'react-icons/fa6'
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr'
+import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 import './PaginationUi'
 import './SearchPaginationUi.scss'
 

@@ -1,7 +1,8 @@
 import { headers as getHeaders } from 'next/headers'
-import { getPayload } from 'payload'
-import config from '@payload-config'
 import Link from 'next/link'
+import config from '@payload-config'
+import { getPayload } from 'payload'
+import './AdminBar.scss'
 
 export async function AdminBar() {
   const headers = await getHeaders()
@@ -10,10 +11,12 @@ export async function AdminBar() {
 
   if (user) {
     return (
-      <div>
-        Bienvenue {user.email}
-        <Link href={'/admin'}>Dashboard</Link>
-        <Link href={'/admin/logout'}>Logout</Link>
+      <div className="admin-bar">
+        <p>Bienvenue {user.email}</p>
+        <div>
+          <Link href={'/admin'}>Dashboard</Link>
+          <Link href={'/admin/logout'}>Logout</Link>
+        </div>
       </div>
     )
   } else {

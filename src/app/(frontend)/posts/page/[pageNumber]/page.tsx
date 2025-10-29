@@ -1,11 +1,11 @@
-import type { Metadata } from 'next/types'
-import { PageRange } from '@/components/Pagination/PageRange'
-import { Pagination } from '@/components/Pagination/Pagination'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { headers as getHeaders } from 'next/headers'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next/types'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
+import { PageRange } from '@/components/Pagination/PageRange'
+import { Pagination } from '@/components/Pagination/Pagination'
 import { postPerPage } from '../../page'
 
 export const revalidate = 600

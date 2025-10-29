@@ -1,6 +1,6 @@
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 import { headers as getHeaders } from 'next/headers'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
 import { PageRange } from '@/components/Pagination/PageRange'
 import { Pagination } from '@/components/Pagination/Pagination'

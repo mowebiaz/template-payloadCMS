@@ -1,19 +1,19 @@
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
 import { cache } from 'react'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
-import { draftMode } from 'next/headers'
-import { RichText } from '@/components/RichText/RichText'
-import { format } from 'date-fns'
-import Image from 'next/image'
-import { headers as getHeaders } from 'next/headers'
-import { generateMeta } from '@/utilities/generateMeta'
 import { Metadata } from 'next'
-import { articleSchema, imageSchema } from '@/components/Schema/Schema'
-import type { Media, Post } from '@/payload-types'
+import { draftMode, headers as getHeaders } from 'next/headers'
+import Image from 'next/image'
 import Script from 'next/script'
+import configPromise from '@payload-config'
+import { format } from 'date-fns'
+import { getPayload } from 'payload'
+import { LivePreviewListener } from '@/components/LivePreviewListener/LivePreviewListener'
 import { Redirects } from '@/components/Redirects/Redirects'
 import { RelatedPosts } from '@/components/RelatedPosts/RelatedPosts'
+import { RichText } from '@/components/RichText/RichText'
+import { articleSchema, imageSchema } from '@/components/Schema/Schema'
+import type { Media, Post } from '@/payload-types'
+import { generateMeta } from '@/utilities/generateMeta'
+import { PostHero } from '@/components/PostHero/PostHero'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -77,9 +77,10 @@ export default async function Post({ params: paramsPromise }: Args) {
         {draft && <LivePreviewListener />}
 
         <section>
-          <h1>{post.title}</h1>
 
-          {post.coverImage &&
+{/*
+          <h1>{post.title}</h1>
+           {post.coverImage &&
           typeof post.coverImage === 'object' &&
           post.coverImage.url ? (
             <Image
@@ -90,7 +91,9 @@ export default async function Post({ params: paramsPromise }: Args) {
             />
           ) : (
             <p>No cover image available</p>
-          )}
+          )} */}
+
+          <PostHero post={post} />
 
           {post.content && <RichText data={post.content} />}
         </section>

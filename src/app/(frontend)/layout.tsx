@@ -1,10 +1,10 @@
-import { Geist, Geist_Mono } from 'next/font/google'
 import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
 import { AdminBar } from '@/components/AdminBar/AdminBar'
+import Favicon from '@/components/Favicon/Favicon'
+import { Footer } from '@/components/Footer/Footer'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { ThemeProvider } from '@/providers/Theme/ThemeProvider'
-import { Footer } from '@/components/Footer/Footer'
-import Favicon from '@/components/Favicon/Favicon'
 import '@/styles/globals.scss'
 
 const geistSans = Geist({
@@ -28,14 +28,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" suppressHydrationWarning={true}>
+    <html
+      lang="fr"
+      suppressHydrationWarning={true}
+    >
       <head>
         <InitTheme />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeProvider>
-           <Favicon />
-           <AdminBar /> 
+          <Favicon />
+          <AdminBar />
           {children}
           <Footer />
         </ThemeProvider>

@@ -1,12 +1,11 @@
-import { Search } from '@/components/Search/Search'
 import { Metadata } from 'next'
-import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
+import { getPayload } from 'payload'
 import { CardPostData } from '@/components/ArticleCard/ArticleCard'
+import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
 import { PageRange } from '@/components/Pagination/PageRange'
-import { Pagination } from '@/components/Pagination/Pagination'
 import { SearchPagination } from '@/components/Pagination/SearchPagination'
+import { Search } from '@/components/Search/Search'
 
 export default async function SearchPage(props: {
   searchParams?: Promise<{ query?: string; page?: string }>
@@ -58,9 +57,7 @@ export default async function SearchPage(props: {
         <div>No result found</div>
       )}
       {searchResults.totalPages > 1 && searchResults.page && (
-        <SearchPagination
-          totalPages={searchResults.totalPages}
-        />
+        <SearchPagination totalPages={searchResults.totalPages} />
       )}
     </main>
   )
