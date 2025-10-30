@@ -5,7 +5,7 @@ import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleC
 import { PageRange } from '@/components/Pagination/PageRange'
 import { Pagination } from '@/components/Pagination/Pagination'
 
-export const postPerPage = 6
+const postPerPage = 6
 
 export default async function Posts() {
   const headers = await getHeaders()

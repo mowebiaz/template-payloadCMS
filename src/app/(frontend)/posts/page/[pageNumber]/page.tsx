@@ -6,9 +6,9 @@ import { getPayload } from 'payload'
 import { ArticleCardContainer } from '@/components/ArticleCardContainer/ArticleCardContainer'
 import { PageRange } from '@/components/Pagination/PageRange'
 import { Pagination } from '@/components/Pagination/Pagination'
-import { postPerPage } from '../../page'
 
 export const revalidate = 600
+const postPerPage = 6
 
 type Args = {
   params: Promise<{
