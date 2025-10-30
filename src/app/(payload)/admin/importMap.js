@@ -28,7 +28,7 @@ import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c
 import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
-import { default as default_b5a75d292585ff21027c2f22b1aa6d10 } from '@/components/Avatar.tsx'
+import { default as default_ae2ca3c7814c0f3a047337229fb3ba09 } from '@/components/Avatar/Avatar.tsx'
 import { Header as Header_56fb1099419ddad146c11d020fe622b3 } from '@/components/Admin/ui/header.tsx'
 import { Logout as Logout_62f08f92b00a7306634db9272517c36a } from '@/components/Admin/ui/logout.tsx'
 import { Outro as Outro_f85720e69ac9bc2a5e3ee1e919825e22 } from '@/components/Admin/ui/afterDashboard.tsx'
@@ -68,7 +68,7 @@ export const importMap = {
   "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
-  "@/components/Avatar.tsx#default": default_b5a75d292585ff21027c2f22b1aa6d10,
+  "@/components/Avatar/Avatar.tsx#default": default_ae2ca3c7814c0f3a047337229fb3ba09,
   "@/components/Admin/ui/header.tsx#Header": Header_56fb1099419ddad146c11d020fe622b3,
   "@/components/Admin/ui/logout.tsx#Logout": Logout_62f08f92b00a7306634db9272517c36a,
   "@/components/Admin/ui/afterDashboard.tsx#Outro": Outro_f85720e69ac9bc2a5e3ee1e919825e22,

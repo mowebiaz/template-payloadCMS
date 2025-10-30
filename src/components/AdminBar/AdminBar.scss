@@ -1,32 +1,30 @@
 @use '@/styles/mixins' as *;
 
-.admin-bar {
+#payload-admin-bar {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     padding: 0.5rem 0.75rem;
     background-color: var(--background);
     border-bottom: 1px solid var(--border);
     color: var(--foreground);
 
-    p {
-        grid-column: 1;
-        text-align: left;
-        @include md {
-            grid-column: 2;
-            text-align: center;
-        }
+    > * {
+        grid-row: 1;
     }
+}
 
-    div {
-        grid-column: 3;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-end;
-        @include md {
-            flex-direction: row;
-            justify-content: flex-end;
-        }
-    }
+.admin-bar__logo {
+    grid-column: 1;
+}
+
+.adminbar__logout {
+    grid-column: 3;
+    justify-self: end;
+}
+
+.adminbar__user {
+    grid-column: 2;
+    justify-self: center;
+    pointer-events: none;
 }

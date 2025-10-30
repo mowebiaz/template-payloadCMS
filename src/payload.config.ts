@@ -35,7 +35,7 @@ export default buildConfig({
     //avatar: 'gravatar',
     avatar: {
       Component: {
-        path: '@/components/Avatar.tsx',
+        path: '@/components/Avatar/Avatar.tsx',
       },
     },
     dateFormat: 'dd/MM/yyyy',
