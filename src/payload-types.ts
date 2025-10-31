@@ -195,6 +195,21 @@ export interface Post {
 export interface Media {
   id: number;
   nom?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Alternative text for the image, used for accessibility and SEO
    */
@@ -560,6 +575,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   nom?: T;
+  caption?: T;
   alt?: T;
   creditText?: T;
   photographe?: T;
@@ -862,6 +878,16 @@ export interface ToCProps {
   id?: string | null;
   blockName?: string | null;
   blockType: 'tableOfContents';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

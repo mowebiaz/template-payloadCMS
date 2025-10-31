@@ -19,6 +19,7 @@ import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import editor from '../Users/access/editor'
 //import { afterErrorHook } from './hooks'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -178,7 +179,7 @@ export const Posts: CollectionConfig = {
                   }),
 
                   BlocksFeature({
-                    blocks: [ContentWithMedia, TableOfContent],
+                    blocks: [ContentWithMedia, TableOfContent, MediaBlock],
                   }),
                 ],
 

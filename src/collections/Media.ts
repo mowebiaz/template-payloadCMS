@@ -1,3 +1,7 @@
+import {
+  FixedToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import { anyone } from './Users/access/anyone'
 import user from './Users/access/user'
@@ -22,6 +26,15 @@ export const Media: CollectionConfig = {
       /*       admin: {
         position: 'sidebar',
       }, */
+    },
+    {
+      name: 'caption',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [...rootFeatures, FixedToolbarFeature()]
+        },
+      }),
     },
     {
       name: 'alt',
@@ -53,44 +66,61 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
     },
-    mimeTypes: ['image/*'],
-    //staticDir: 'media',
+    mimeTypes: ['image/*', 'video/*'],
 
-    // from payload v3.51.0
-    //imageSizes: [{ name: 'small', fit: 'cover', width: 400, height: 400 }],
     adminThumbnail: 'thumbnail',
-    //adminThumbnail: ({doc}) : string => `https://google.com/path/to/file/${doc.filename}`,
     imageSizes: [
       {
         name: 'thumbnail',
         width: 300,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'square',
         width: 500,
         height: 500,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'small',
         width: 600,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'medium',
         width: 900,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'large',
         width: 1400,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'xlarge',
         width: 1920,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'og',
         width: 1200,
         height: 630,
         crop: 'center',
+        formatOptions: {
+          format: 'webp',
+        },
       },
     ],
   },
