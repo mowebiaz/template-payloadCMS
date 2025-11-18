@@ -8,7 +8,7 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { en } from '@payloadcms/translations/languages/en'
 import { fr } from '@payloadcms/translations/languages/fr'
-import { buildConfig, PayloadRequest } from 'payload'
+import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { Categories } from './collections/Categories'
 import { revalidateRedirects } from './collections/hooks/revalidateRedirects'
@@ -285,17 +285,7 @@ export default buildConfig({
         admin: { description: 'Choose the type of redirect to use' },
       },
     }),
-  ],
-  jobs: {
-    access: {
-      run: ({ req }: { req: PayloadRequest }) => {
-        if (req.user) return true
-        const authHeader = req.headers.get('authorization')
-        return authHeader === `Bearer ${process.env.CRON_SECRET}`
-      },
-    },
-    tasks: [],
-  },
+  ]
 
   // To make documents created before enabling draft mode visible in the admin field
   /*   onInit: async (payload) => {
