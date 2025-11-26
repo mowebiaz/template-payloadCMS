@@ -344,8 +344,21 @@ export interface SearchResult {
     relationTo: 'posts';
     value: number | Post;
   };
-  excerpt?: string | null;
   slug?: string | null;
+  plaintext?: string | null;
+  excerpt?: string | null;
+  coverImage?: (number | null) | Media;
+  categories?:
+    | {
+        relationTo?: string | null;
+        categoryID?: string | null;
+        title?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    description?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -708,8 +721,23 @@ export interface SearchResultsSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;
-  excerpt?: T;
   slug?: T;
+  plaintext?: T;
+  excerpt?: T;
+  coverImage?: T;
+  categories?:
+    | T
+    | {
+        relationTo?: T;
+        categoryID?: T;
+        title?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

@@ -17,7 +17,7 @@ export default async function SearchPage(props: {
   const payload = await getPayload({ config: configPromise })
   const searchResults = await payload.find({
     collection: 'search-results',
-    depth: 1,
+    depth: 3,
     limit: 6,
     page: currentPage,
     pagination: true, // access to page, totalPages...
@@ -25,6 +25,9 @@ export default async function SearchPage(props: {
       title: true,
       slug: true,
       excerpt: true,
+      coverImage: true,
+      categories: true,
+      meta: true,
       doc: true,
     },
     ...(query
