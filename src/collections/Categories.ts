@@ -1,17 +1,16 @@
 import type { CollectionConfig } from 'payload'
+import { slugField } from '@/components/Admin/Fields/slug/slugField'
 import { anyone } from './Users/access/anyone'
+import editor from './Users/access/editor'
 import user from './Users/access/user'
-
-
-//import { slugField } from '@/fields/slug'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
   access: {
     read: anyone,
     create: user,
-    update: user,
-    delete: user,
+    update: editor,
+    delete: editor,
   },
   admin: {
     useAsTitle: 'title',
@@ -22,6 +21,6 @@ export const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    //...slugField(),
+    ...slugField(),
   ],
 }
