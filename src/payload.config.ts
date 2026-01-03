@@ -20,6 +20,7 @@ import { beforeSyncWithSearch } from './components/Search/beforeSync'
 import { searchFields } from './components/Search/fieldOverrides'
 import { Logos } from './globals/Logos'
 import { getServerSideURL } from './utilities/getURL'
+import { Customers } from './collections/Customers/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -160,7 +161,7 @@ export default buildConfig({
   editor: defaultLexical,
 
   // Define and configure your collections in this array
-  collections: [Posts, Media, Users, Categories],
+  collections: [Posts, Media, Users, Categories, Customers],
   globals: [Logos],
 
   // Your Payload secret - should be a complex and secure string, unguessable

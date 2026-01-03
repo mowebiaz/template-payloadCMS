@@ -1,11 +1,11 @@
 import type { FieldHook } from 'payload'
 import type { User } from '@/payload-types'
 
-export const protectRoles: FieldHook<{ id: string } & User> = async ({
+export const protectRoles: FieldHook<{ id: string } & User> = ({
   req,
   data,
 }) => {
-  const { totalDocs } = await req.payload.count({ collection: 'users' })
+  /*   const { totalDocs } = await req.payload.count({ collection: 'users' })
   const isFirstUser = totalDocs === 0
 
   if (isFirstUser) {
@@ -13,15 +13,18 @@ export const protectRoles: FieldHook<{ id: string } & User> = async ({
     roles.add('admin')
     roles.add('user')
     return [...roles]
+  } */
+
+  if (req.user?.collection === 'users') {
+    const isAdmin = req.user?.roles?.includes('admin')
+
+    if (!isAdmin) {
+      if (!data?.roles?.includes('editor')) {
+        return ['user']
+      }
+    }
+    const userRoles = new Set(data?.roles || [])
+    userRoles.add('user') // Ensure 'user' role is always included
+    return [...userRoles]
   }
-
-  const isAdmin = req.user?.roles?.includes('admin')
-
-  if (!isAdmin) {
-    return ['user']
-  }
-
-  const userRoles = new Set(data?.roles || [])
-  userRoles.add('user') // Ensure 'user' role is always included
-  return [...userRoles.values()]
 }

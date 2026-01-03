@@ -1,0 +1,13 @@
+#dashboard {
+    width: 100%;
+    margin: 2rem auto;
+    .one {
+        margin: 1rem 0;
+    }
+    .two {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: 1rem;
+    }
+}
